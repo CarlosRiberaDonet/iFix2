@@ -37,7 +37,7 @@ public class ClienteFrame extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         initUI();
-        tablaClientes.addMouseListener(new ClienteTableMouseListener(tablaClientes, clientesList));
+        tablaClientes.addMouseListener(new ClienteTableMouseListener(tablaClientes, clientesList)); // Listener que abre las reparaciones del cliente
     }
 
     private void initUI() {
@@ -83,9 +83,11 @@ public class ClienteFrame extends JFrame{
         
         clientesList.clear();
 
+        // Listar todos los clientes
         if(nombreTextField.getText().isEmpty() && apellidosTextField.getText().isEmpty() && telefonoTextField.getText().isEmpty()){
            clientesList.addAll(ClienteController.getAllClientes());
         }
+        // Buscar cliente mediante parámetros
         else{
             clientesList.addAll(ClienteController.findCliente(nombre, apellidos, telefono)); 
         }

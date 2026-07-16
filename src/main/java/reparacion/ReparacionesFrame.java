@@ -36,6 +36,7 @@ public class ReparacionesFrame extends javax.swing.JFrame {
             eliminarButton.setEnabled(false);
         }
     }
+    
     public void cargarTabla(List<Reparacion> reparacionesList) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
@@ -49,7 +50,7 @@ public class ReparacionesFrame extends javax.swing.JFrame {
             }
         };
 
-       /* for (Reparacion r : reparacionesList) {
+        for (Reparacion r : reparacionesList) {
             String fechaEntrada = r.getFechaEntrada().format(formatter);
             String fechaSalida = r.getFechaSalida().format(formatter);
             modelo.addRow(new Object[] {
@@ -94,18 +95,45 @@ public class ReparacionesFrame extends javax.swing.JFrame {
         direccionLabel = new javax.swing.JLabel();
         modificarButton = new javax.swing.JButton();
         eliminarButton = new javax.swing.JButton();
+        añadirButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        nombreTextField = new javax.swing.JTextField();
+        telefonoTextField = new javax.swing.JTextField();
+        direccionTextField = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        clienteLabel.setText("jLabel1");
+        clienteLabel.setText("Cliente:");
 
-        telefonoLabel.setText("jLabel1");
+        telefonoLabel.setText("Teléfono:");
 
-        direccionLabel.setText("jLabel1");
+        direccionLabel.setText("Dirección:");
 
-        modificarButton.setText("jButton1");
+        modificarButton.setText("Modificar");
 
-        eliminarButton.setText("jButton1");
+        eliminarButton.setText("Eliminar");
+
+        añadirButton.setText("Añadir");
+
+        jButton1.setText("Actualizar Lista");
+
+        jButton2.setText("Salir");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,28 +145,56 @@ public class ReparacionesFrame extends javax.swing.JFrame {
                         .addGap(44, 44, 44)
                         .addComponent(clienteLabel)
                         .addGap(18, 18, 18)
-                        .addComponent(telefonoLabel)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(añadirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(nombreTextField))
                         .addGap(18, 18, 18)
-                        .addComponent(direccionLabel))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(modificarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(telefonoLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(telefonoTextField)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 179, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(direccionLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(direccionTextField))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(modificarButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(eliminarButton)))
-                .addContainerGap(197, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(clienteLabel)
                     .addComponent(telefonoLabel)
-                    .addComponent(direccionLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                    .addComponent(direccionLabel)
+                    .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(telefonoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(direccionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(añadirButton)
+                    .addComponent(eliminarButton)
                     .addComponent(modificarButton)
-                    .addComponent(eliminarButton))
+                    .addComponent(jButton2))
                 .addGap(49, 49, 49))
         );
 
@@ -181,10 +237,18 @@ public class ReparacionesFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton añadirButton;
     private javax.swing.JLabel clienteLabel;
     private javax.swing.JLabel direccionLabel;
+    private javax.swing.JTextField direccionTextField;
     private javax.swing.JButton eliminarButton;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JButton modificarButton;
+    private javax.swing.JTextField nombreTextField;
     private javax.swing.JLabel telefonoLabel;
+    private javax.swing.JTextField telefonoTextField;
     // End of variables declaration//GEN-END:variables
 }
