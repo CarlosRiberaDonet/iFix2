@@ -16,12 +16,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author sovi8
  */
-public class ReparacionesFrame extends javax.swing.JFrame {
+public class ReparacionesClienteFrame extends javax.swing.JFrame {
 
     private Cliente cliente;
     private List<Reparacion> reparacionesList = new ArrayList<>();
     
-    public ReparacionesFrame(Cliente cliente, List<Reparacion> reparacionesList) {
+    public ReparacionesClienteFrame(Cliente cliente, List<Reparacion> reparacionesList) {
         initComponents();
         this.cliente = cliente;
         this.reparacionesList = reparacionesList;
@@ -30,6 +30,7 @@ public class ReparacionesFrame extends javax.swing.JFrame {
         direccionLabel.setText(cliente.getDireccion().toUpperCase());
         cargarTabla(reparacionesList);
         setResizable(false);
+        setTitle("Reparaciones");
         
         if(reparacionesList.isEmpty()){
             modificarButton.setEnabled(false);
@@ -42,7 +43,7 @@ public class ReparacionesFrame extends javax.swing.JFrame {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
 
         DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] {
-                "ENTRADA", "SALIDA", "DISPOSITIVO", "REPARACION", "ESTADO", "IMPORTE"
+                "ENTRADA", "SALIDA", "MARCA", "MODELO", "IMEI", "ESTADO"
         }) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -56,16 +57,16 @@ public class ReparacionesFrame extends javax.swing.JFrame {
             modelo.addRow(new Object[] {
                     fechaEntrada,
                     fechaSalida,
-                    r.getModelo(),
-                    r.getTipoReparacion(),
-                    r.getEstado(),
-                    r.getPrecio()
+                    r.getDispositivo().getModelo(),
+                    r.getDispositivo().getNombre(),
+                    r.getDispositivo().getImei(),
+                    r.getEstado()
             });
         }
 
         reparacionesTable.setModel(modelo);
 
-        // FIX: centrar el contenido de todas las columnas
+        // Centrar el contenido de todas las columnas
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 0; i < reparacionesTable.getColumnCount(); i++) {
@@ -76,7 +77,7 @@ public class ReparacionesFrame extends javax.swing.JFrame {
         reparacionesTable.getColumnModel().getColumn(0).setMaxWidth(0);
         reparacionesTable.getColumnModel().getColumn(0).setWidth(0);
 
-        reparacionesTable.addMouseListener(new ReparacionTableMouseListener(reparacionesTable, reparacionesList));*/
+        reparacionesTable.addMouseListener(new ReparacionTableMouseListener(this, reparacionesTable, cliente, reparacionesList));
     }
     
     
@@ -97,12 +98,14 @@ public class ReparacionesFrame extends javax.swing.JFrame {
         eliminarButton = new javax.swing.JButton();
         añadirButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        nombreTextField = new javax.swing.JTextField();
-        telefonoTextField = new javax.swing.JTextField();
-        direccionTextField = new javax.swing.JTextField();
+        exitButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        reparacionesTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,12 +120,22 @@ public class ReparacionesFrame extends javax.swing.JFrame {
         eliminarButton.setText("Eliminar");
 
         añadirButton.setText("Añadir");
+        añadirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                añadirButtonActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Actualizar Lista");
 
-        jButton2.setText("Salir");
+        exitButton.setText("Salir");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        reparacionesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -133,7 +146,13 @@ public class ReparacionesFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(reparacionesTable);
+
+        jLabel1.setText("Cliente:");
+
+        jLabel2.setText("Teléfono:");
+
+        jLabel3.setText("Dirección:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,51 +161,59 @@ public class ReparacionesFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(clienteLabel)
+                        .addGap(104, 104, 104)
+                        .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(añadirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(nombreTextField))
+                        .addComponent(añadirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(modificarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(telefonoLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(telefonoTextField)))
+                        .addComponent(modificarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 179, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(direccionLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(direccionTextField))))
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 179, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                        .addComponent(jScrollPane1))
+                    .addComponent(jSeparator2))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(446, 446, 446)
+                        .addComponent(jSeparator1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(clienteLabel)
+                        .addGap(115, 115, 115)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(telefonoLabel)
+                        .addGap(96, 96, 96)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(direccionLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clienteLabel)
-                    .addComponent(telefonoLabel)
-                    .addComponent(direccionLabel)
-                    .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(telefonoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(direccionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 22, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(clienteLabel)
+                        .addComponent(telefonoLabel)
+                        .addComponent(direccionLabel)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)))
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -194,61 +221,50 @@ public class ReparacionesFrame extends javax.swing.JFrame {
                     .addComponent(añadirButton)
                     .addComponent(eliminarButton)
                     .addComponent(modificarButton)
-                    .addComponent(jButton2))
+                    .addComponent(exitButton))
                 .addGap(49, 49, 49))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        dispose();
+    }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void añadirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirButtonActionPerformed
+        DetalleReparacionDialog dialog =
+        new DetalleReparacionDialog(
+            (java.awt.Frame) getParent(),
+            true,
+            cliente,
+            null
+        );
+
+    dialog.setLocationRelativeTo(this);
+    dialog.setVisible(true);
+    }//GEN-LAST:event_añadirButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ReparacionesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ReparacionesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ReparacionesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ReparacionesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-               // new ReparacionesFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton añadirButton;
     private javax.swing.JLabel clienteLabel;
     private javax.swing.JLabel direccionLabel;
-    private javax.swing.JTextField direccionTextField;
     private javax.swing.JButton eliminarButton;
+    private javax.swing.JButton exitButton;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JButton modificarButton;
-    private javax.swing.JTextField nombreTextField;
+    private javax.swing.JTable reparacionesTable;
     private javax.swing.JLabel telefonoLabel;
-    private javax.swing.JTextField telefonoTextField;
     // End of variables declaration//GEN-END:variables
 }

@@ -20,17 +20,19 @@ public class Reparacion {
     private boolean garantia;
     private String comentarios;
     private String estado;
+    private Double importe;
     private Dispositivo dispositivo;
     private List<ReparacionTipo> reparacionTipo;
 
     
     // CONSTRUCTOR
-    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, boolean garantia, String comentarios, String estado, Dispositivo dispositivo, List<ReparacionTipo> reparacionTipo) {
+    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, boolean garantia, String comentarios, String estado, Double importe, Dispositivo dispositivo, List<ReparacionTipo> reparacionTipo) {
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.garantia = garantia;
         this.comentarios = comentarios;
         this.estado = estado;
+        this.importe = importe;
         this.dispositivo = dispositivo;
         this.reparacionTipo = reparacionTipo;
     }
@@ -86,6 +88,14 @@ public class Reparacion {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Double getImporte() {
+        return importe;
+    }
+
+    public void setImporte(Double importe) {
+        this.importe = importe;
     }
 
     public Dispositivo getDispositivo() {

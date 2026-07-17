@@ -85,9 +85,10 @@ public class ReparacionDao {
                     // Dispositivo
                     Dispositivo d = new Dispositivo();
                     d.setId(rs.getLong("id_dispositivo"));
-                    d.setMarca(m);
                     d.setImei(rs.getString("imei"));
-
+                    d.setModelo(mo);
+                    d.setCliente(c);
+                    
                     // Reparacion
                     Reparacion r = new Reparacion();
                     r.setId(rs.getLong("id_reparacion"));

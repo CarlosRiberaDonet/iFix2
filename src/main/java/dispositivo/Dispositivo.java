@@ -4,7 +4,8 @@
  */
 package dispositivo;
 
-import marca.Marca;
+import cliente.Cliente;
+import modelo.Modelo;
 
 /**
  *
@@ -14,15 +15,17 @@ public class Dispositivo {
     private Long id;
     private String nombre;
     private String imei;
-    private Marca marca;
+    private Modelo modelo;
+    private Cliente cliente;
 
     
     // CONSTRUCTOR
-    public Dispositivo(Long id, String nombre, String imei, Marca marca) {
+    public Dispositivo(Long id, String nombre, String imei,  Modelo modelo, Cliente cliente) {
         this.id = id;
         this.nombre = nombre;
         this.imei = imei;
-        this.marca = marca;
+        this.modelo = modelo;
+        this.cliente = cliente;
     }
 
     public Dispositivo() {
@@ -53,13 +56,19 @@ public class Dispositivo {
         this.imei = imei;
     }
 
-    public Marca getMarca() {
-        return marca;
+    public Modelo getModelo() {
+        return modelo;
     }
 
-    public void setMarca(Marca marca) {
-        this.marca = marca;
+    public void setModelo(Modelo modelo) {
+        this.modelo = modelo;
     }
-    
-    
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 }

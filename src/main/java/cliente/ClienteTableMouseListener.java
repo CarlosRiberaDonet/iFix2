@@ -10,7 +10,7 @@ import java.util.List;
 import javax.swing.JTable;
 import reparacion.Reparacion;
 import reparacion.ReparacionController;
-import reparacion.ReparacionesFrame;
+import reparacion.ReparacionesClienteFrame;
 
 /**
  *
@@ -32,7 +32,7 @@ public class ClienteTableMouseListener extends MouseAdapter{
             if (fila >= 0 && fila < clientesList.size()) {
                 Cliente clienteSeleccionado = clientesList.get(fila);
                 List<Reparacion> reparacionesList = ReparacionController.findReparacionesByIdCliente(clienteSeleccionado.getId());
-                ReparacionesFrame frame = new ReparacionesFrame(clienteSeleccionado, reparacionesList);
+                ReparacionesClienteFrame frame = new ReparacionesClienteFrame(clienteSeleccionado, reparacionesList);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }

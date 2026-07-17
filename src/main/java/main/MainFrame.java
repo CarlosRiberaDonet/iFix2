@@ -91,7 +91,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_clientesButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-         System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
     /**

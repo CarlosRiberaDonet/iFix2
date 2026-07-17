@@ -22,7 +22,7 @@ public class ReparacionesTable extends javax.swing.JPanel {
     
     public ReparacionesTable(List<Reparacion> reparacionesList) {
         initComponents();
-         String[] columnas = {"ID", "ENTRADA", "SALIDA", "CLIENTE", "DISPOSITIVO", "REPARACION", "ESTADO", "IMPORTE"};
+         String[] columnas = {"ENTRADA", "SALIDA", "CLIENTE", "DISPOSITIVO", "REPARACION", "ESTADO", "IMPORTE"};
         reparacionesTable = new DefaultTableModel(columnas, 0){
             @Override
             public boolean isCellEditable(int row, int column){
@@ -38,23 +38,21 @@ public class ReparacionesTable extends javax.swing.JPanel {
     }
     
      public void setReparaciones(List<Reparacion> reparacionesList){
-       /* reparacionesTable.setRowCount(0);
+        reparacionesTable.setRowCount(0);
         for (Reparacion r : reparacionesList) {
             String fechaEntrada = Utils.localDateToString(r.getFechaEntrada());
             String fechaSalida = Utils.localDateToString(r.getFechaEntrada());
             Object[] fila = {
-                r.getId(),
                 fechaEntrada,
                 fechaSalida,
-                r.getCliente().getNombre().toUpperCase() + " " + r.getCliente().getApellidos().toUpperCase(),
-                r.get,
-                r.getTipoReparacion().getTipoReparacion().toUpperCase(),
-                r.getEstado(),
-                r.getPrecioReparacion()             
+                r.getDispositivo().getCliente().getNombre().toUpperCase() + " " + r.getDispositivo().getCliente().getApellidos(),
+                r.getDispositivo().getModelo().getNombre().toUpperCase(),
+                r.getReparacionTipo().getLast().toString().toUpperCase(),
+                r.getEstado().toUpperCase(),
+                r.getReparacionTipo().getLast().getPrecio()
             };
             reparacionesTable.addRow(fila);
-            System.out.println("ESTADO REPARACION: " + r.getEstado());
-        }*/
+        }
    }
    
    public JTable getTablaReparaciones(){
