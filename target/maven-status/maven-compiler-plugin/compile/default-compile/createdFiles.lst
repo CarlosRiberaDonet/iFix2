@@ -2,7 +2,6 @@ modelo\Modelo.class
 reparacion\DetalleReparacionDialog$1.class
 cliente\CrearClientePanel$1.class
 main\MainFrame$1.class
-reparacion\DetalleReparacionDialog$6.class
 reparacion\DetalleReparacionDialog.class
 dispositivo\Dispositivo.class
 modelo\ModeloDao.class
@@ -27,7 +26,6 @@ utils\Utils.class
 reparacion\ReparacionDao.class
 marca\MarcaController.class
 reparacion\ReparacionesTable.class
-reparacion\DetalleReparacionDialog$5.class
 main\MainFrame.class
 reparacion\ReparacionesTable$1.class
 reparacion\ReparacionesClienteFrame$1.class

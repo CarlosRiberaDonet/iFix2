@@ -4,8 +4,11 @@
  */
 package utils;
 
+import com.toedter.calendar.JDateChooser;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
@@ -78,10 +81,15 @@ public class Utils {
          return fecha.format(formato);
      }
     
-    public static java.sql.Date LocalDateToSqlDate(LocalDate localDate) {
-        if (localDate == null) return null;
-        return java.sql.Date.valueOf(localDate);
+    public static Date toDate(LocalDate localDate) {
+    if (localDate == null) {
+        return null;
     }
+
+    return (Date) Date.from(
+        localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()
+    );
+}
 
     public static BigDecimal stringToBigDecimal(String valor) {
        try{
@@ -91,14 +99,20 @@ public class Utils {
            return null;
        }
      }
+    
+    public static LocalDate checkFecha(JDateChooser dateChooser) {
 
-    public static LocalDate checkFecha(String fechaStr){
-       if(fechaStr != null || fechaStr.trim().isEmpty()){
-         return stringToLocalDate(fechaStr);
-       } else{
+       Date fecha = (Date) dateChooser.getDate();
+
+       if (fecha == null) {
            return null;
-       }      
-     }
+       }
+
+       return fecha.toInstant()
+               .atZone(ZoneId.systemDefault())
+               .toLocalDate();
+   }
+    
 
     public static boolean confirmationMessage(String titulo, String texto){
       

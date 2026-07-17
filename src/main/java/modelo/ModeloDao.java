@@ -35,8 +35,7 @@ public class ModeloDao {
                 m.setId(rs.getLong("id"));
                 m.setMarca(marca);
                 m.setNombre(rs.getString("nombre"));
-                
-                System.out.println("MODELOS: " + m.toString());
+
                 modelosList.add(m);   
             }
         } catch(SQLException e){

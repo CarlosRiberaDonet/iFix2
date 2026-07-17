@@ -71,14 +71,14 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="entradaLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="entradaTextField" min="-2" pref="130" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="entradaDate" min="-2" pref="150" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="salidaLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="salidaTextField" min="-2" pref="126" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="salidaDate" min="-2" pref="150" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="estadoComboBox" min="-2" pref="137" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="importeLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="importeTextField" min="-2" pref="80" max="-2" attributes="0"/>
@@ -129,14 +129,18 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="8" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="entradaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="salidaTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="entradaTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="salidaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="importeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="importeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="estadoComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="entradaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="salidaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="importeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="importeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="estadoComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="entradaDate" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="salidaDate" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator4" min="-2" pref="10" max="-2" attributes="0"/>
@@ -257,11 +261,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="imeiTextField">
     </Component>
-    <Component class="javax.swing.JTextField" name="salidaTextField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salidaTextFieldActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JLabel" name="salidaLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="F.Salida:"/>
@@ -289,11 +288,6 @@
         <Property name="text" type="java.lang.String" value="F.Entrada:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="entradaTextField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="entradaTextFieldActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator4">
     </Component>
     <Component class="javax.swing.JComboBox" name="marcaComboBox">
@@ -307,6 +301,10 @@
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;Marca&gt;()"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Marca&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="entradaDate">
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="salidaDate">
     </Component>
   </SubComponents>
 </Form>
