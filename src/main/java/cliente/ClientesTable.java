@@ -37,9 +37,9 @@ public class ClientesTable extends JPanel{
         add(scroll, BorderLayout.CENTER);
 
         // Ocultar la columna ID
-        /*tablaClientes.getColumnModel().getColumn(0).setMinWidth(0);
+        tablaClientes.getColumnModel().getColumn(0).setMinWidth(0);
         tablaClientes.getColumnModel().getColumn(0).setMaxWidth(0);
-        tablaClientes.getColumnModel().getColumn(0).setWidth(0);*/
+        tablaClientes.getColumnModel().getColumn(0).setWidth(0);
     }
       
      public void cargarClientes(List<Cliente> lista) {

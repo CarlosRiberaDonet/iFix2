@@ -4,26 +4,27 @@
  */
 package reparacionTipo;
 
+import java.math.BigDecimal;
 import tipoReparacion.TipoReparacion;
 
 /**
  *
  * @author sovi8
  */
-public class ReparacionTipo {
+public class LineaReparacion {
     private Long id;
     private TipoReparacion tipoReparacion;
-    private Double precio;
+    private BigDecimal precio;
 
     
     // CONSTRUCTOR
-    public ReparacionTipo(Long id, TipoReparacion tipoReparacion, Double precio) {
+    public LineaReparacion(Long id, TipoReparacion tipoReparacion, BigDecimal precio) {
         this.id = id;
         this.tipoReparacion = tipoReparacion;
         this.precio = precio;
     }
 
-    public ReparacionTipo() {
+    public LineaReparacion() {
     }
      
     // GETTERS Y SETTERS
@@ -44,11 +45,11 @@ public class ReparacionTipo {
         this.tipoReparacion = tipoReparacion;
     }
 
-    public Double getPrecio() {
+    public BigDecimal getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
     

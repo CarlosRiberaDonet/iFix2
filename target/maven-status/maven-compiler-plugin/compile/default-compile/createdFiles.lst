@@ -1,7 +1,9 @@
 modelo\Modelo.class
+dispositivo\DispositivoDao.class
 reparacion\DetalleReparacionDialog$1.class
 cliente\CrearClientePanel$1.class
 main\MainFrame$1.class
+reparacion\DetalleReparacionDialog$6.class
 reparacion\DetalleReparacionDialog.class
 dispositivo\Dispositivo.class
 modelo\ModeloDao.class
@@ -18,7 +20,7 @@ com\mycompany\ifix2\ConexionBD.class
 reparacion\ReparacionesClienteFrame$3.class
 reparacion\ReparacionTableMouseListener.class
 cliente\ClienteFrame.class
-reparacionTipo\ReparacionTipo.class
+tipoReparacion\TipoReparacionController.class
 cliente\Cliente.class
 cliente\ClienteDao.class
 reparacion\DetalleReparacionDialog$2.class
@@ -26,8 +28,11 @@ utils\Utils.class
 reparacion\ReparacionDao.class
 marca\MarcaController.class
 reparacion\ReparacionesTable.class
+reparacionTipo\LineaReparacionDao.class
+reparacion\DetalleReparacionDialog$5.class
 main\MainFrame.class
 reparacion\ReparacionesTable$1.class
+reparacionTipo\LineaReparacion.class
 reparacion\ReparacionesClienteFrame$1.class
 cliente\ClienteTableMouseListener.class
 cliente\CrearClientePanel.class
@@ -35,6 +40,9 @@ marca\MarcaDao.class
 reparacion\DetalleReparacionDialog$4.class
 com\mycompany\ifix2\IFix2.class
 tipoReparacion\TipoReparacion.class
+tipoReparacion\TipoReparacionDao.class
 reparacion\ReparacionesClienteFrame$2.class
+dispositivo\DispositivoController.class
 modelo\ModeloController.class
 main\MainFrame$2.class
+reparacionTipo\LineaReparacionController.class

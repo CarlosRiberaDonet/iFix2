@@ -11,11 +11,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import marca.Marca;
 import modelo.Modelo;
-import reparacionTipo.ReparacionTipo;
+import reparacionTipo.LineaReparacion;
 import tipoReparacion.TipoReparacion;
 
 /**
@@ -76,11 +77,11 @@ public class ReparacionDao {
                     tr.setId(rs.getLong("idTipo")); 
                     tr.setNombre(rs.getString("nombre_tipo_reparacion"));
                     
-                    // ReparacionTipo
-                    ReparacionTipo rt = new ReparacionTipo();
+                    // LineaReparacion
+                    LineaReparacion rt = new LineaReparacion();
                     rt.setId(rs.getLong("id_reparacion_tipo"));
                     rt.setTipoReparacion(tr);
-                    rt.setPrecio(rs.getDouble("precio"));
+                    rt.setPrecio(rs.getBigDecimal("precio"));
                            
                     // Dispositivo
                     Dispositivo d = new Dispositivo();
@@ -110,5 +111,37 @@ public class ReparacionDao {
         }
 
         return reparacionesList;
+    }
+    
+    // Crear nueva reparación
+    public static Long insertReparacion(Reparacion reparacion){
+        
+        String sql = "INSERT INTO reparacion (id_dispositivo, fecha_entrada, fecha_salida, garantia, comentarios, estado) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+         try(Connection conn =  ConexionBD.connect(); PreparedStatement stmt = conn.prepareStatement(sql,  Statement.RETURN_GENERATED_KEYS)){
+            
+            stmt.setLong(1, reparacion.getDispositivo().getId());
+            stmt.setDate(2,java.sql.Date.valueOf(reparacion.getFechaEntrada()));
+            stmt.setDate(3, java.sql.Date.valueOf(reparacion.getFechaSalida()));
+            stmt.setBoolean(4, reparacion.isGarantia());
+            stmt.setString(5, reparacion.getComentarios());
+            stmt.setString(6, reparacion.getEstado());
+            
+            int filasAfectadas = stmt.executeUpdate();
+            
+            if(filasAfectadas > 0){
+                 ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                return rs.getLong(1);
+            }
+            }
+           
+
+            
+
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+        return -1L;
     }
 }

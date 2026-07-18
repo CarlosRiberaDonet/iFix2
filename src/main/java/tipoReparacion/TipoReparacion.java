@@ -17,11 +17,10 @@ public class TipoReparacion {
         this.id = id;
         this.nombre = nombre;
     }
-
+       
     public TipoReparacion() {
     }
-    
-    
+
     // GETTERS Y SETTERS
     public Long getId() {
         return id;
@@ -37,6 +36,11 @@ public class TipoReparacion {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    @Override
+    public String toString() {
+        return nombre;
     }
     
     

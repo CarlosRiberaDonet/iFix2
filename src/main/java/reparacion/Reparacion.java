@@ -5,9 +5,10 @@
 package reparacion;
 
 import dispositivo.Dispositivo;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import reparacionTipo.ReparacionTipo;
+import reparacionTipo.LineaReparacion;
 
 /**
  *
@@ -20,13 +21,13 @@ public class Reparacion {
     private boolean garantia;
     private String comentarios;
     private String estado;
-    private Double importe;
+    private BigDecimal importe;
     private Dispositivo dispositivo;
-    private List<ReparacionTipo> reparacionTipo;
+    private List<LineaReparacion> reparacionTipo;
 
     
     // CONSTRUCTOR
-    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, boolean garantia, String comentarios, String estado, Double importe, Dispositivo dispositivo, List<ReparacionTipo> reparacionTipo) {
+    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, boolean garantia, String comentarios, String estado, BigDecimal importe, Dispositivo dispositivo, List<LineaReparacion> reparacionTipo) {
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.garantia = garantia;
@@ -90,11 +91,11 @@ public class Reparacion {
         this.estado = estado;
     }
 
-    public Double getImporte() {
+    public BigDecimal getImporte() {
         return importe;
     }
 
-    public void setImporte(Double importe) {
+    public void setImporte(BigDecimal importe) {
         this.importe = importe;
     }
 
@@ -106,11 +107,11 @@ public class Reparacion {
         this.dispositivo = dispositivo;
     }
 
-    public List<ReparacionTipo> getReparacionTipo() {
+    public List<LineaReparacion> getReparacionTipo() {
         return reparacionTipo;
     }
 
-    public void setReparacionTipo(List<ReparacionTipo> reparacionTipo) {
+    public void setReparacionTipo(List<LineaReparacion> reparacionTipo) {
         this.reparacionTipo = reparacionTipo;
     }
 
