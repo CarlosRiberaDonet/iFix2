@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.sql.DataSource;
 
 /**
  *
@@ -110,5 +109,34 @@ public class ClienteDao {
         }
         
         return clientesList;
+    }
+    
+    // Modificar campos de tabla cliente
+    public static boolean updateCliente(Cliente cliente){
+        
+        String sql = "UPDATE cliente SET nombre = ?, "
+                + "apellidos = ?, "
+                + "telefono = ?, "
+                + "direccion = ? "
+                + "WHERE id = ?";
+        
+        try(Connection conn = ConexionBD.connect(); PreparedStatement stmt = conn.prepareStatement(sql)){
+            
+            stmt.setString(1, cliente.getNombre());
+            stmt.setString(2, cliente.getApellidos());
+            stmt.setString(3, cliente.getTelefono());
+            stmt.setString(4, cliente.getDireccion());
+            
+            stmt.setLong(5, cliente.getId());
+            
+            int filasAfectadas = stmt.executeUpdate();
+            
+            if(filasAfectadas > 0){
+                return true;
+            }
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+        return false;
     }
 }

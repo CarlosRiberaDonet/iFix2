@@ -6,7 +6,10 @@ package reparacion;
 
 import dispositivo.DispositivoController;
 import java.util.List;
-import reparacionTipo.LineaReparacionController;
+import lineaReparacion.LineaReparacion;
+import lineaReparacion.LineaReparacionController;
+import lineaReparacion.LineaReparacionDao;
+import marca.MarcaController;
 
 /**
  *
@@ -14,33 +17,69 @@ import reparacionTipo.LineaReparacionController;
  */
 public class ReparacionController {
     
-    // Obtener lista de reparaciones del cliente
-     public static List<Reparacion> findReparacionesByIdCliente(Long clienteId){ 
-        return ReparacionDao.getReparacionesByClienteId(clienteId);
-    }
-     
+    private static MarcaController mc = new MarcaController();
+    private static DispositivoController dc = new DispositivoController();
+    private static LineaReparacionController lr = new LineaReparacionController();
     
     // Agregar nueva reparación
     public boolean addReparacion(Reparacion reparacion){
         
-        // Inserto nuevo dispositivo en la BD y recupero el id generado
-        Long idDispositivo = DispositivoController.addNewDispositivo(reparacion.getDispositivo());
-        System.out.println("idDispositivo = " + idDispositivo);
-        // Si se ha insertado correctamente > 0
-        if(idDispositivo > 0){ 
-            
-            // NO INSERTA LA REPARACION, DICE QUE "dispositivo.Dispositivo.getId()" is null
-            // Inserto nueva reparación en la BD y recupero el id generado
-            Long idReparacion = ReparacionDao.insertReparacion(reparacion);
-            System.out.println("idReparacion = " + idReparacion);
-            // Si se ha insertado correctamente la reparación
-            if(idReparacion > 0){
-                
-                // Inserto la nueva línea de reparación
-                LineaReparacionController.insertNewLinea(reparacion);
-                return true;
-            }
+        // Compruebo si el imei del dispositivo existe en la BD
+        if(!dc.checkImei(reparacion.getDispositivo().getImei())){
+            reparacion.getDispositivo().setId(dc.addNewDispositivo(reparacion.getDispositivo())); // Inserto nuevo dispositivo en la BD y recupero el id generado
         }
+    
+        // Inserto nueva reparación en la BD y recupero el id generado
+        Long idReparacion = ReparacionDao.insertReparacion(reparacion);
+        // Si se ha insertado correctamente > 0
+        if(idReparacion > 0){       
+            // Asingo idReparacion
+            reparacion.setId(idReparacion);
+            // Llamo a controller para iterar sobre la lista de reparaciones
+            lr.insertNewLinea(reparacion);
+
+            return true;
+        }
+        
         return false;
+    } 
+    
+    // Obtener reparacion del cliente mediante idReparacion
+    public Reparacion getReparacion(Long idReparacion){
+        return ReparacionDao.selectReparacionByid();
+    }
+    
+    // Obtener lista reparaciones del cliente
+     public static List<Reparacion> findReparacionesByIdCliente(Long clienteId){ 
+        return ReparacionDao.getReparacionesByIdCliente(clienteId);
+    }
+     
+   // Obtener lista de reparaciones realizadas en una reparación a un dispositivo
+     public List<LineaReparacion> getLineaReparacionList(Long idReparacion){
+         return LineaReparacionDao.selectLineaReparacion(idReparacion);
+     }
+     
+    // Modificar reparación existente
+    public boolean modificarReparacion(Reparacion reparacion){   
+        
+        // Modificar dispositivo
+        dc.modificarDispositivo(reparacion.getDispositivo());
+        System.out.println("MODELO MODIFICADO");
+        
+        // Elimino las entradas de la tabla linea_reparacion que pertenecen a este idReparacion
+        lr.quitarLineaReparacion(reparacion.getId());
+        System.out.println("FILAS ELIMINADAS");
+        
+        // Agrego las nueva List<LineaReparacion> a la tabla linea_reparacion
+        lr.insertNewLinea(reparacion);
+        System.out.println("NUEVA REPARACION INSERTADA");
+        // Actualizar campos de la tabla reparacion
+         System.out.println("ACTUALZIANDO REPARACION");
+        return ReparacionDao.actualizarDatos(reparacion);
+    }
+    
+    // Eliminar reparacion
+    public boolean eliminarReparacion(Long idReparacion){
+        return ReparacionDao.deleteReparacion(idReparacion);
     }
 }

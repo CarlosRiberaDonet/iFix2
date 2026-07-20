@@ -36,4 +36,25 @@ public class MarcaDao {
         } 
         return marcas;
     }
+    
+   public static Marca updateMarca(Marca marca) {
+
+        String sql = "UPDATE marca SET nombre = ? WHERE id = ?";
+
+        try (Connection conn = ConexionBD.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, marca.getNombre());
+            stmt.setLong(2, marca.getId());
+
+            if (stmt.executeUpdate() > 0) {
+                return marca;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
 }

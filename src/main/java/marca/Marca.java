@@ -4,6 +4,8 @@
  */
 package marca;
 
+import java.util.Objects;
+
 /**
  *
  * @author sovi8
@@ -42,5 +44,19 @@ public class Marca {
     @Override
     public String toString() {
         return nombre;
+    }
+    
+      @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Marca other = (Marca) obj;
+        return Objects.equals(id, other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

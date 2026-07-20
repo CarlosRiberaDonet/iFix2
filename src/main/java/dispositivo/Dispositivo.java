@@ -13,16 +13,13 @@ import modelo.Modelo;
  */
 public class Dispositivo {
     private Long id;
-    private String nombre;
     private String imei;
     private Modelo modelo;
     private Cliente cliente;
 
     
     // CONSTRUCTOR
-    public Dispositivo(Long id, String nombre, String imei,  Modelo modelo, Cliente cliente) {
-        this.id = id;
-        this.nombre = nombre;
+    public Dispositivo(String imei,  Modelo modelo, Cliente cliente) {
         this.imei = imei;
         this.modelo = modelo;
         this.cliente = cliente;
@@ -38,14 +35,6 @@ public class Dispositivo {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public String getImei() {

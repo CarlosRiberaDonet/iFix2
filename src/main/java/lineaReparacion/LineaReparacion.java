@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package reparacionTipo;
+package lineaReparacion;
 
 import java.math.BigDecimal;
 import tipoReparacion.TipoReparacion;
@@ -13,21 +13,20 @@ import tipoReparacion.TipoReparacion;
  */
 public class LineaReparacion {
     private Long id;
+    private Long idReparacion;
     private TipoReparacion tipoReparacion;
     private BigDecimal precio;
 
     
     // CONSTRUCTOR
-    public LineaReparacion(Long id, TipoReparacion tipoReparacion, BigDecimal precio) {
-        this.id = id;
+    public LineaReparacion(Long idReparacion, TipoReparacion tipoReparacion, BigDecimal precio) {
+        this.idReparacion = idReparacion;
         this.tipoReparacion = tipoReparacion;
         this.precio = precio;
     }
 
     public LineaReparacion() {
     }
-     
-    // GETTERS Y SETTERS
 
     public Long getId() {
         return id;
@@ -35,6 +34,17 @@ public class LineaReparacion {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    
+     
+    // GETTERS Y SETTERS
+    public Long getIdReparacion() {
+        return idReparacion;
+    }
+
+    public void setIdReparacion(Long idReparacion) {
+        this.idReparacion = idReparacion;
     }
 
     public TipoReparacion getTipoReparacion() {
@@ -51,6 +61,11 @@ public class LineaReparacion {
 
     public void setPrecio(BigDecimal precio) {
         this.precio = precio;
+    }
+
+    @Override
+    public String toString() {
+        return "LineaReparacion{" + "idReparacion=" + idReparacion + ", tipoReparacion=" + tipoReparacion + ", precio=" + precio + '}';
     }
     
     

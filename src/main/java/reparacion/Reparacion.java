@@ -8,7 +8,8 @@ import dispositivo.Dispositivo;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import reparacionTipo.LineaReparacion;
+import lineaReparacion.LineaReparacion;
+
 
 /**
  *
@@ -23,11 +24,11 @@ public class Reparacion {
     private String estado;
     private BigDecimal importe;
     private Dispositivo dispositivo;
-    private List<LineaReparacion> reparacionTipo;
+    private List<LineaReparacion> lineaReparacion;
 
     
     // CONSTRUCTOR
-    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, boolean garantia, String comentarios, String estado, BigDecimal importe, Dispositivo dispositivo, List<LineaReparacion> reparacionTipo) {
+    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, boolean garantia, String comentarios, String estado, BigDecimal importe, Dispositivo dispositivo, List<LineaReparacion> lineaReparacion) {
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.garantia = garantia;
@@ -35,7 +36,7 @@ public class Reparacion {
         this.estado = estado;
         this.importe = importe;
         this.dispositivo = dispositivo;
-        this.reparacionTipo = reparacionTipo;
+        this.lineaReparacion = lineaReparacion;
     }
 
     public Reparacion() {
@@ -107,17 +108,17 @@ public class Reparacion {
         this.dispositivo = dispositivo;
     }
 
-    public List<LineaReparacion> getReparacionTipo() {
-        return reparacionTipo;
+    public List<LineaReparacion> getLineaReparacion() {
+        return lineaReparacion;
     }
 
-    public void setReparacionTipo(List<LineaReparacion> reparacionTipo) {
-        this.reparacionTipo = reparacionTipo;
+    public void setLineaReparacion(List<LineaReparacion> lineaReparacion) {
+        this.lineaReparacion = lineaReparacion;
     }
 
     @Override
     public String toString() {
-        return "Reparacion{" + "id=" + id + ", fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", garantia=" + garantia + ", comentarios=" + comentarios + ", estado=" + estado + ", dispositivo=" + dispositivo + ", reparacionTipo=" + reparacionTipo + '}';
+        return "Reparacion{" + "id=" + id + ", fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", garantia=" + garantia + ", comentarios=" + comentarios + ", estado=" + estado + ", dispositivo=" + dispositivo + ", lineaReparacion=" + lineaReparacion + '}';
     }
     
     

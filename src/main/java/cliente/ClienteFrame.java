@@ -52,12 +52,12 @@ public class ClienteFrame extends JFrame{
 
         JButton buscarButton = new JButton("Buscar");
         JButton crearClienteButton = new JButton("Crear");
+        JButton modificarClienteButton = new JButton("Modificar");
         JButton eliminarCliente = new JButton("Eliminar");
-        JButton salirButton = new JButton("Atrás");
         buscarButton.addActionListener(e -> buscarCliente());
         crearClienteButton.addActionListener(e -> abrirCrearCliente());
+        modificarClienteButton.addActionListener(e -> modificarCliente());
         eliminarCliente.addActionListener(e -> eliminarCliente());
-        salirButton.addActionListener(e -> dispose());
 
         topPanel.add(new JLabel("Nombre:"));
         topPanel.add(nombreTextField);
@@ -67,8 +67,8 @@ public class ClienteFrame extends JFrame{
         topPanel.add(telefonoTextField);
         topPanel.add(buscarButton);
         topPanel.add(crearClienteButton);
+        topPanel.add(modificarClienteButton);
         topPanel.add(eliminarCliente);
-        topPanel.add(salirButton);
 
         add(topPanel, BorderLayout.NORTH);
         tablePanel = new ClientesTable();
@@ -99,7 +99,7 @@ public class ClienteFrame extends JFrame{
         dialog.setSize(400, 300);
         dialog.setLocationRelativeTo(this);
         dialog.setLayout(new BorderLayout());
-        dialog.add(new CrearClientePanel(), BorderLayout.CENTER);
+        dialog.add(new ClientePanel(null, true), BorderLayout.CENTER);
         dialog.setVisible(true);
     }
     
@@ -114,6 +114,24 @@ public class ClienteFrame extends JFrame{
             } else{
                 JOptionPane.showMessageDialog(this, "No se ha podido eliminar el cliente.","ERROR",  JOptionPane.ERROR_MESSAGE);
             }
+        }
+    }
+    
+    private void modificarCliente(){
+        int filaSelect = tablaClientes.getSelectedRow();
+        if(filaSelect >= 0){
+            Long idCliente = (Long) tablaClientes.getValueAt(filaSelect, 0);
+            for(Cliente c : clientesList){
+                if(c.getId() == idCliente){
+                    JDialog dialog = new JDialog(this, "MODIFICAR CLIENTE", true);
+                    dialog.setSize(400, 300);
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setLayout(new BorderLayout());
+                    dialog.add(new ClientePanel(c, false), BorderLayout.CENTER);
+                    dialog.setVisible(true);
+                }
+            }
+            
         }
     }
 }

@@ -12,14 +12,25 @@ import javax.swing.SwingUtilities;
  *
  * @author sovi8
  */
-public class CrearClientePanel extends javax.swing.JPanel{
+public class ClientePanel extends javax.swing.JPanel{
     
-
+    private Cliente cliente;
+    private boolean newCliente;
     /**
      * Creates new form NuevoCliente
      */
-    public CrearClientePanel() {
+    public ClientePanel(Cliente cliente , boolean newCliente) {
         initComponents();
+        this.cliente = cliente;
+        this.newCliente = newCliente;
+        
+        if(!newCliente){
+            crearClienteButton.setText("MODIFICAR");
+            nombreTextField.setText(cliente.getNombre());
+            apellidosTextField.setText(cliente.getApellidos());
+            telefonoTextField.setText(cliente.getTelefono());
+            direccionTextField.setText(cliente.getDireccion());
+        } 
     }
 
     /**
@@ -106,11 +117,14 @@ public class CrearClientePanel extends javax.swing.JPanel{
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void crearClienteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearClienteButtonActionPerformed
-        String nombre = nombreTextField.getText().toLowerCase();
-        String apellidos = apellidosTextField.getText().toLowerCase();
-        String telefono = telefonoTextField.getText();
-        String direccion = direccionTextField.getText().toLowerCase();
+    private void crearClienteButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        
+        // Si el cliente es nuevo
+        if(newCliente){
+            String nombre = nombreTextField.getText().toUpperCase();
+            String apellidos = apellidosTextField.getText().toUpperCase();
+            String telefono = telefonoTextField.getText();
+            String direccion = direccionTextField.getText().toUpperCase();
         try{
             // Verifico si el número de teléfono ya está asignado a otro cliente
             Cliente nuevoCliente = new Cliente(nombre, apellidos, telefono, direccion);
@@ -123,8 +137,26 @@ public class CrearClientePanel extends javax.swing.JPanel{
                 
         } catch(Exception e){
             JOptionPane.showMessageDialog(this, "No se ha podido guardar el cliente" + e.getMessage());
-            e.printStackTrace();
+                e.printStackTrace();
+            }
         }
+        
+        // Si el cliente existe y se van a modificar los datos
+        if(!newCliente){
+            cliente.setNombre(nombreTextField.getText().toUpperCase());
+            cliente.setApellidos(apellidosTextField.getText().toUpperCase());
+            cliente.setTelefono(telefonoTextField.getText().toUpperCase());
+            cliente.setDireccion(direccionTextField.getText().toUpperCase());
+            
+            // LLamo a controller para modificar datos del cliente
+            if(ClienteController.modificarCliente(cliente)){
+                 JOptionPane.showMessageDialog(this, "Cliente modifiado correctamente");
+            }else {
+                JOptionPane.showMessageDialog(this, "Ya existe un cliente con este número de teléfono");
+                return;
+            }
+        }
+       
         Window window = SwingUtilities.getWindowAncestor(this);
         if (window != null) {
             window.dispose();

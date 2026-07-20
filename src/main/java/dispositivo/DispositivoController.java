@@ -11,7 +11,17 @@ package dispositivo;
 public class DispositivoController {
     
     // Agregar nuevo dispositivo
-    public static Long addNewDispositivo(Dispositivo dispositivo){
+    public Long addNewDispositivo(Dispositivo dispositivo){
         return DispositivoDao.insertDispositivo(dispositivo);
+    }
+    
+    // Modificar dispositivo
+    public boolean modificarDispositivo(Dispositivo dispositivo){
+        return DispositivoDao.updateDispositivo(null, dispositivo);
+    }
+    
+    public boolean checkImei(String imei){
+        return DispositivoDao.selectImei(imei);
+        
     }
 }

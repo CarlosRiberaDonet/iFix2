@@ -43,4 +43,49 @@ public class DispositivoDao {
         }
         return -1L;
     }
+    
+    // Modificar campos de la tabla dispositivo
+    public static boolean updateDispositivo(Connection conn, Dispositivo dispositivo){
+        
+        if(conn == null){
+            conn = ConexionBD.connect();
+        }
+        String sql = "UPDATE dispositivo SET imei = ?, "
+                + "id_modelo = ? "
+                + "WHERE id = ?";
+        
+         try(PreparedStatement stmt = conn.prepareStatement(sql)){
+            
+            stmt.setString(1, dispositivo.getImei());
+            stmt.setLong(2, dispositivo.getModelo().getId());
+            
+            stmt.setLong(3, dispositivo.getId());
+            
+            return stmt.executeUpdate() > 0;
+            
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public static boolean selectImei(String imei){
+        
+        String sql = "SELECT 1 FROM dispositivo WHERE imei = ?";
+        
+        try(Connection conn = ConexionBD.connect(); PreparedStatement stmt = conn.prepareStatement(sql)){
+            
+            stmt.setString(1, imei);
+            
+           ResultSet rs = stmt.executeQuery();
+           
+           if(rs.next()){
+               return true;
+           }
+            
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+        
+        return false;
+    }
 }

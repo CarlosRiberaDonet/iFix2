@@ -31,4 +31,10 @@ public class ClienteController {
     public static List<Cliente> findCliente(String nombre, String apellidos, String telefono){
         return ClienteDao.selectCliente(nombre, apellidos, telefono);
     }
+    
+    // Modificar cliente
+    public static boolean modificarCliente(Cliente cliente){
+        
+        return ClienteDao.updateCliente(cliente);
+    }
 }

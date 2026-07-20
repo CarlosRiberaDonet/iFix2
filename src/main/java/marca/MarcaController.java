@@ -13,7 +13,12 @@ import java.util.List;
 public class MarcaController {
     
     // Cargar marcas disponibles en marcaComboBox
-    public static List<Marca> llenarComboBoxMarca(){                
+    public List<Marca> llenarComboBoxMarca(){                
         return MarcaDao.getMarcas();
+    }
+    
+    // Modificar Marca
+    public Marca modificarMarca(Marca marca){
+        return MarcaDao.updateMarca(marca);
     }
 }

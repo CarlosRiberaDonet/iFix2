@@ -4,6 +4,7 @@
  */
 package modelo;
 
+import java.util.Objects;
 import marca.Marca;
 
 /**
@@ -49,4 +50,18 @@ public class Modelo {
     public String toString() {
         return nombre;
     }  
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Modelo other = (Modelo) obj;
+        return Objects.equals(id, other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
