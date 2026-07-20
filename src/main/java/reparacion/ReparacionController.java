@@ -23,12 +23,15 @@ public class ReparacionController {
     
     // Agregar nueva reparación
     public boolean addReparacion(Reparacion reparacion){
+         
+        // Trato de obtener el idDispositivo mediante su imei
+        reparacion.getDispositivo().setId(dc.checkImei(reparacion.getDispositivo().getImei()));
         
-        // Compruebo si el imei del dispositivo existe en la BD
-        if(!dc.checkImei(reparacion.getDispositivo().getImei())){
+        // si el dispositivo no existe en la BD
+        if(reparacion.getDispositivo().getId() == null){
             reparacion.getDispositivo().setId(dc.addNewDispositivo(reparacion.getDispositivo())); // Inserto nuevo dispositivo en la BD y recupero el id generado
         }
-    
+        
         // Inserto nueva reparación en la BD y recupero el id generado
         Long idReparacion = ReparacionDao.insertReparacion(reparacion);
         // Si se ha insertado correctamente > 0

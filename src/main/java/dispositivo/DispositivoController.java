@@ -20,7 +20,7 @@ public class DispositivoController {
         return DispositivoDao.updateDispositivo(null, dispositivo);
     }
     
-    public boolean checkImei(String imei){
+    public Long checkImei(String imei){
         return DispositivoDao.selectImei(imei);
         
     }

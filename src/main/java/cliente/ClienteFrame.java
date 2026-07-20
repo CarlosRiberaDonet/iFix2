@@ -74,6 +74,8 @@ public class ClienteFrame extends JFrame{
         tablePanel = new ClientesTable();
         tablaClientes = tablePanel.getTablaClientes(); 
         add(tablePanel, BorderLayout.CENTER);
+        
+        eliminarCliente.setEnabled(false); // Deshabilito eliminar cliente hasta nueva implementación (ON DELETE CASCADE)
     }
 
     private void buscarCliente(){    

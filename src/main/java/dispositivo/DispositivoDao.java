@@ -68,9 +68,9 @@ public class DispositivoDao {
         }
     }
     
-    public static boolean selectImei(String imei){
+    public static Long selectImei(String imei){
         
-        String sql = "SELECT 1 FROM dispositivo WHERE imei = ?";
+        String sql = "SELECT id FROM dispositivo WHERE imei = ?";
         
         try(Connection conn = ConexionBD.connect(); PreparedStatement stmt = conn.prepareStatement(sql)){
             
@@ -79,13 +79,13 @@ public class DispositivoDao {
            ResultSet rs = stmt.executeQuery();
            
            if(rs.next()){
-               return true;
+               return rs.getLong("id");
            }
             
         }catch(SQLException e){
             throw new RuntimeException(e);
         }
         
-        return false;
+        return null;
     }
 }

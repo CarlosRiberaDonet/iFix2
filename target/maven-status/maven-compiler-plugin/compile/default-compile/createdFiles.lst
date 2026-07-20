@@ -12,6 +12,7 @@ cliente\Cliente.class
 reparacion\DetalleReparacionDialog$2.class
 reparacion\ReparacionDao.class
 marca\MarcaController.class
+reparacion\DetalleReparacionDialog$9.class
 lineaReparacion\LineaReparacionController.class
 reparacion\ReparacionesTable.class
 reparacion\DetalleReparacionDialog$5.class
@@ -24,11 +25,13 @@ modelo\ModeloController.class
 cliente\ClientePanel.class
 dispositivo\DispositivoDao.class
 main\MainFrame$1.class
+reparacion\ReparacionesFrame$1.class
 reparacion\DetalleReparacionDialog$6.class
 reparacion\DetalleReparacionDialog.class
 cliente\ClientePanel$1.class
 modelo\ModeloDao.class
 cliente\ClienteController.class
+main\MainFrame$4.class
 reparacion\ReparacionesClienteFrame.class
 cliente\ClientesTable.class
 reparacion\DetalleReparacionDialog$3.class
@@ -45,6 +48,7 @@ reparacion\ReparacionesClienteFrame$1.class
 cliente\ClienteTableMouseListener.class
 marca\MarcaDao.class
 reparacion\DetalleReparacionDialog$4.class
+reparacion\ReparacionesFrame.class
 tipoReparacion\TipoReparacion.class
 reparacion\ReparacionesClienteFrame$4.class
 main\MainFrame$2.class

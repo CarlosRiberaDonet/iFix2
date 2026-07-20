@@ -68,7 +68,6 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         direccionTextField = new javax.swing.JTextField();
         nombreTextField = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
         comentariosLabel = new javax.swing.JLabel();
         guardarButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -88,11 +87,11 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         entradaDate = new com.toedter.calendar.JDateChooser();
         salidaDate = new com.toedter.calendar.JDateChooser();
         tipoReparacionComboBox = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        reparacionLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        marcaLabel = new javax.swing.JLabel();
+        modeloLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         reparacionesJTable = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
@@ -179,13 +178,13 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
 
         tipoReparacionComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new TipoReparacion[] {}));
 
-        jLabel1.setText("Reparación:");
+        reparacionLabel.setText("Reparación:");
 
         jLabel2.setText("Estado:");
 
-        jLabel7.setText("Marca:");
+        marcaLabel.setText("Marca:");
 
-        jLabel9.setText("Modelo:");
+        modeloLabel.setText("Modelo:");
 
         reparacionesJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -229,7 +228,6 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
             .addComponent(jSeparator2)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -248,17 +246,17 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
+                                        .addComponent(marcaLabel)
                                         .addGap(33, 33, 33)
                                         .addComponent(marcaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(22, 22, 22)
-                                        .addComponent(jLabel9)
+                                        .addComponent(modeloLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(precioTextField)
                                             .addComponent(modeloComboBox, 0, 140, Short.MAX_VALUE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
+                                        .addComponent(reparacionLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(tipoReparacionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -266,14 +264,14 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(addLineaReparacionButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(delLineaReparacionButton))
-                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(imeiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(imeiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(addLineaReparacionButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(delLineaReparacionButton)
+                                        .addGap(18, 18, 18)
                                         .addComponent(garantiaCheckBox))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -302,21 +300,19 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(46, 46, 46)
                                         .addComponent(importeLabel))
-                                    .addComponent(importeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(importeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(45, 45, 45)
-                                        .addComponent(jLabel2)))))
+                                        .addComponent(jLabel2))
+                                    .addComponent(estadoComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(291, 291, 291)
+                .addGap(275, 275, 275)
                 .addComponent(comentariosLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -350,20 +346,20 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(marcaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel9)
+                    .addComponent(marcaLabel)
+                    .addComponent(modeloLabel)
                     .addComponent(modeloComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(imeiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(garantiaCheckBox))
+                    .addComponent(imeiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(reparacionLabel)
                     .addComponent(tipoReparacionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(precioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addLineaReparacionButton)
-                    .addComponent(delLineaReparacionButton))
+                    .addComponent(delLineaReparacionButton)
+                    .addComponent(garantiaCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -374,12 +370,10 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
                         .addComponent(importeLabel)
                         .addGap(3, 3, 3)
                         .addComponent(importeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(comentariosLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -469,22 +463,29 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         }  
     }
     
-    // Compportamiento de los elementos del Dialog
+    // Comportamiento de los elementos del Dialog
     public void blockFields(){
-            garantiaCheckBox.setEnabled(newReparacion);
-            entradaDate.setEnabled(newReparacion);
-            salidaDate.setEnabled(newReparacion);
-            marcaComboBox.setEnabled(newReparacion);
-            modeloComboBox.setEnabled(newReparacion);
-            tipoReparacionComboBox.setEnabled(newReparacion);
-            imeiTextField.setEnabled(newReparacion);
-            nombreTextField.setEnabled(newReparacion);
-            addLineaReparacionButton.setEnabled(newReparacion);
-            delLineaReparacionButton.setEnabled(newReparacion);
-            estadoComboBox.setEnabled(newReparacion);
-            guardarButton.setEnabled(newReparacion);
-            precioTextField.setEditable(newReparacion);
-            modificarButton.setEnabled(!newReparacion); 
+        
+        // Campos cliente
+        nombreTextField.setEnabled(false);
+        apellidosTextField.setEnabled(false);
+        telefonoTextField.setEnabled(false);
+        direccionTextField.setEnabled(false);
+        
+        // Campos reparación
+        garantiaCheckBox.setEnabled(newReparacion);
+        entradaDate.setEnabled(newReparacion);
+        salidaDate.setEnabled(newReparacion);
+        marcaComboBox.setEnabled(newReparacion);
+        modeloComboBox.setEnabled(newReparacion);
+        tipoReparacionComboBox.setEnabled(newReparacion);
+        imeiTextField.setEnabled(newReparacion);
+        addLineaReparacionButton.setEnabled(newReparacion);
+        delLineaReparacionButton.setEnabled(newReparacion);
+        estadoComboBox.setEnabled(newReparacion);
+        guardarButton.setEnabled(newReparacion);
+        precioTextField.setEditable(newReparacion);
+        modificarButton.setEnabled(!newReparacion); 
     }
     
     // Cargar combobox marca
@@ -534,37 +535,45 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
     
     // Tabla que contiene TipoReparacion y precio
     public void tablaReparaciones() {
+
         reparacionesTabla = new DefaultTableModel(
             new Object[]{"Tipo de reparación", "Precio"},
             0
-        );
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
         reparacionesJTable.setModel(reparacionesTabla);
     }
     
     // Comprobación de campos
-    public void checkField(){
+    public boolean checkField(){
         // Compruebo longitud del imei
         if(imeiTextField.getText().length() < 15 || imeiTextField.getText().length() > 15){
             JOptionPane.showMessageDialog(null, "El IMEI no es válido.", "ERROR", JOptionPane.ERROR_MESSAGE);
-            return;
+            return false;
         }
         // Compruebo el importe
          if (importe == null) {
             JOptionPane.showMessageDialog(null, "Revise el importe", "ERROR", JOptionPane.ERROR_MESSAGE);
-            return;
+            return false;
         }
          if(nombreTextField.getText().trim().isEmpty()){
-              JOptionPane.showMessageDialog(null, "Revise el nombre del cliente", "ERROR", JOptionPane.ERROR_MESSAGE);
-              return;
+            JOptionPane.showMessageDialog(null, "Revise el nombre del cliente", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return false;
          }
         if(telefonoTextField.getText().trim().isEmpty()){
             JOptionPane.showMessageDialog(null, "Revise el número de teléfono del cliente", "ERROR", JOptionPane.ERROR_MESSAGE);
-            return;
+            return false;
         }
         if(lineaReparacionList.size() < 1){
             JOptionPane.showMessageDialog(null, "Debe añadir mínimo un tipo de reparación", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
+        return true;
     }
     
     public void getCliente(){
@@ -578,14 +587,10 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
     // Método que obtiene los datos del Dispositivo
     public Dispositivo buildDispositivo(Dispositivo dispositivo){
         
-        if(reparacion.getDispositivo() == null){
-            dispositivo = new Dispositivo();
-        }
         // Obtengo datos del nuevo dispositivo (todavía sin id en la BD)
-         
         dispositivo.setCliente(cliente);
-        //dispositivo.setImei(imeiTextField.getText());
-        dispositivo.setImei("123456789032165");  
+        dispositivo.setImei(imeiTextField.getText());
+        //dispositivo.setImei("123456789032165");  
         dispositivo.setModelo(modeloSelect);
         
         return dispositivo;
@@ -593,10 +598,11 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
     
     // Crear nueva reparación
     private boolean addNewReparacion(){
-        //checkField();// Validación de campos del formulario
+        
         
         // Obtengo objeto con los datos de la reparación
         Reparacion r = new Reparacion();
+        Dispositivo d = buildDispositivo(new Dispositivo());
         
         r.setFechaEntrada(Utils.checkFecha(entradaDate));
         r.setFechaSalida(Utils.checkFecha(salidaDate));
@@ -605,6 +611,7 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         r.setComentarios(comentariosTextArea.getText()); // Comentarios
         r.setImporte(Utils.stringToBigDecimal(importeTextField.getText())); // Importe total
         r.setGarantia(garantiaCheckBox.isSelected());   
+        r.setDispositivo(d);
              
         return rc.addReparacion(r);
     }
@@ -626,6 +633,8 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
     
     private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
 
+        if(!checkField()) return;// Validación de campos del formulario
+        
         // Si es una nueva reparación
         if (!modificar) {
             
@@ -665,7 +674,7 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         if(fila < 0) return;
         
         lineaReparacionList.remove(fila);
-        reparacion.getLineaReparacion().remove(fila);
+        //reparacion.getLineaReparacion().remove(fila);
         reparacionesTabla.removeRow(fila);   
         
         // Actualizo el importe
@@ -739,25 +748,24 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
     private javax.swing.JTextField imeiTextField;
     private javax.swing.JLabel importeLabel;
     private javax.swing.JTextField importeTextField;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JComboBox<Marca> marcaComboBox;
+    private javax.swing.JLabel marcaLabel;
     private javax.swing.JComboBox<Modelo> modeloComboBox;
+    private javax.swing.JLabel modeloLabel;
     private javax.swing.JButton modificarButton;
     private javax.swing.JTextField nombreTextField;
     private javax.swing.JTextField precioTextField;
+    private javax.swing.JLabel reparacionLabel;
     private javax.swing.JTable reparacionesJTable;
     private com.toedter.calendar.JDateChooser salidaDate;
     private javax.swing.JLabel salidaLabel;
