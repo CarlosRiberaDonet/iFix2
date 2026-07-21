@@ -19,12 +19,10 @@ public class ReparacionTableMouseListener extends MouseAdapter{
     
     Frame parent;
     private JTable reparacionesTable;
-    private Cliente cliente;
     private List<Reparacion> reparacionesList;
     
     public ReparacionTableMouseListener(Frame parent, JTable reparacionesTable, Cliente cliente, List<Reparacion> reparacionesList) {
         this.parent = parent;
-        this.cliente = cliente;
         this.reparacionesTable = reparacionesTable;
         this.reparacionesList = reparacionesList;
     }
@@ -40,6 +38,7 @@ public class ReparacionTableMouseListener extends MouseAdapter{
             if (filaVista != -1) {
                 int filaModelo = reparacionesTable.convertRowIndexToModel(filaVista);
                 Reparacion reparacionSelect = reparacionesList.get(filaModelo);
+                Cliente cliente = reparacionSelect.getDispositivo().getCliente();
                 DetalleReparacionDialog dialog = new DetalleReparacionDialog(parent, true, cliente, reparacionSelect);
                 dialog.setSize(830, 650);
                 dialog.setLocationRelativeTo(null);

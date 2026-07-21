@@ -180,6 +180,7 @@ public class ReparacionDao {
                     
                     Dispositivo d = new Dispositivo();
                     d.setId(rs.getLong("id_dispositivo"));
+                    d.setCliente(c);
                     d.setImei(rs.getString("imei"));
                     d.setModelo(mo);             
                     
