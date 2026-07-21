@@ -410,7 +410,7 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
             modeloSelect = (Modelo) modeloComboBox.getSelectedItem();
         });
         
-         // Listener tabla LineaReparacion
+        // Listener tabla LineaReparacion
         tipoReparacionComboBox.addActionListener(e -> {
             tipoReparacionSelect = (TipoReparacion) tipoReparacionComboBox.getSelectedItem();
         });
@@ -530,7 +530,6 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
             tipoReparacionComboBox.setSelectedIndex(0);
             tipoReparacionSelect = (TipoReparacion) tipoReparacionComboBox.getSelectedItem();
         }
-       
     }
     
     // Tabla que contiene TipoReparacion y precio

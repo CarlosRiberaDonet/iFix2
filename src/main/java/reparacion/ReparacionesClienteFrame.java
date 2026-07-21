@@ -20,10 +20,11 @@ public class ReparacionesClienteFrame extends javax.swing.JFrame {
     private Cliente cliente;
     private List<Reparacion> reparacionesList = new ArrayList<>();
     private ReparacionTableMouseListener listener;
+    private ReparacionController rc = new ReparacionController();
     
     public ReparacionesClienteFrame(Cliente cliente, List<Reparacion> reparacionesList) {
         initComponents();
-        setTitle("Reparaciones");
+        setTitle("Reparaciones Cliente");
         this.cliente = cliente;
         this.reparacionesList = reparacionesList;
         clienteLabel.setText(cliente.getNombre().toUpperCase() + " " + cliente.getApellidos().toUpperCase());
@@ -226,7 +227,7 @@ public class ReparacionesClienteFrame extends javax.swing.JFrame {
 
         // Esta línea se ejecuta cuando el diálogo ya se ha cerrado
         //cargarTabla(ReparacionController.findReparacionesByIdCliente(cliente.getId()));
-        reparacionesList = ReparacionController.findReparacionesByIdCliente(cliente.getId());
+        reparacionesList = rc.findReparacionesByIdCliente(cliente.getId());
         cargarTabla(reparacionesList);
         listener.setReparacionesList(reparacionesList);
     }//GEN-LAST:event_añadirButtonActionPerformed
@@ -235,7 +236,7 @@ public class ReparacionesClienteFrame extends javax.swing.JFrame {
     private void actualizarListaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarListaButtonActionPerformed
         // Obtener lista de reparaciones
        //cargarTabla(ReparacionController.findReparacionesByIdCliente(cliente.getId()));
-        reparacionesList = ReparacionController.findReparacionesByIdCliente(cliente.getId());
+        reparacionesList = rc.findReparacionesByIdCliente(cliente.getId());
 
         cargarTabla(reparacionesList);
 

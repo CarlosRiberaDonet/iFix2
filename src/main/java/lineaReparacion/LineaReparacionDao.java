@@ -47,7 +47,7 @@ public class LineaReparacionDao {
     }
     
     // Obtener lista de linea_reparacion realizada a un dispositivo en una reparación
-    public static List<LineaReparacion> selectLineaReparacion(Long idReparacion){
+    public static List<LineaReparacion> selectLineaReparacionList(Long idReparacion){
         
         List<LineaReparacion> lineaReparacionList = new ArrayList<>();
         String sql = "SELECT lr.id_reparacion, lr.id_tipo_reparacion, lr.precio, "

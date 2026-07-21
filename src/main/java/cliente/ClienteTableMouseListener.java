@@ -19,6 +19,7 @@ import reparacion.ReparacionesClienteFrame;
 public class ClienteTableMouseListener extends MouseAdapter{
     private List<Cliente> clientesList;
     private JTable clienteTable;
+    private ReparacionController rc = new ReparacionController();
 
     public ClienteTableMouseListener(JTable clienteTable, List<Cliente> clientesList) {
         this.clientesList = clientesList;
@@ -31,7 +32,7 @@ public class ClienteTableMouseListener extends MouseAdapter{
             int fila = clienteTable.getSelectedRow();
             if (fila >= 0 && fila < clientesList.size()) {
                 Cliente clienteSeleccionado = clientesList.get(fila);
-                List<Reparacion> reparacionesList = ReparacionController.findReparacionesByIdCliente(clienteSeleccionado.getId());
+                List<Reparacion> reparacionesList = rc.findReparacionesByIdCliente(clienteSeleccionado.getId());
                 ReparacionesClienteFrame frame = new ReparacionesClienteFrame(clienteSeleccionado, reparacionesList);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);

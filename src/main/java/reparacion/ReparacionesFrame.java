@@ -5,8 +5,13 @@
 package reparacion;
 
 import cliente.Cliente;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,11 +22,47 @@ public class ReparacionesFrame extends javax.swing.JFrame {
     private Cliente cliente;
     private List<Reparacion> reparacionesList = new ArrayList<>();
     private ReparacionTableMouseListener listener;
+    private ReparacionController rc = new ReparacionController();
     
     public ReparacionesFrame() {
         initComponents();
+        setTitle("Reparaciones");
         setResizable(false);
+        setLocationRelativeTo(null);
+        cargarTabla(reparacionesList);
+    }
+    
+    // Cargar tablaReparacion
+    public void cargarTabla(List<Reparacion> reparacionList){
+            DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] {
+                "ENTRADA", "SALIDA", "MARCA", "MODELO", "IMEI", "ESTADO", "IMPORTE",
+        }) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        for (Reparacion r : reparacionesList) {
+            modelo.addRow(new Object[] {
+                    r.getFechaEntrada(),
+                    r.getFechaSalida(),
+                    r.getDispositivo().getModelo().getMarca(),
+                    r.getDispositivo().getModelo(),
+                    r.getDispositivo().getImei(),
+                    r.getEstado(),
+                    r.getImporte()
+            });
+        }
         
+        reparacionesTable.setModel(modelo);
+
+        // Centrar el contenido de todas las columnas
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < reparacionesTable.getColumnCount(); i++) {
+            reparacionesTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -31,7 +72,7 @@ public class ReparacionesFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         imeiTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        telefonoTextField = new javax.swing.JTextField();
         entradaDateChooser = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -39,12 +80,11 @@ public class ReparacionesFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         estadoComboBox = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        buscarButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         reparacionesTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("IMEI:");
 
@@ -56,9 +96,14 @@ public class ReparacionesFrame extends javax.swing.JFrame {
 
         jLabel5.setText("Estado:");
 
-        estadoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        estadoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Presupuesto", "Pieza Pedida", "En Reparación", "Reparado" }));
 
-        jButton1.setText("Buscar");
+        buscarButton.setText("Buscar");
+        buscarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarButtonActionPerformed(evt);
+            }
+        });
 
         reparacionesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,7 +132,7 @@ public class ReparacionesFrame extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(telefonoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -105,7 +150,7 @@ public class ReparacionesFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buscarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 57, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -121,7 +166,7 @@ public class ReparacionesFrame extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel5)
                                 .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton1)))
+                                .addComponent(buscarButton)))
                         .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(salidaDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,7 +174,7 @@ public class ReparacionesFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(telefonoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -143,6 +188,41 @@ public class ReparacionesFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonActionPerformed
+        String telefono = telefonoTextField.getText();
+        String imei = imeiTextField.getText();
+        String estado = estadoComboBox.getSelectedItem().toString();
+        LocalDate fechaEntrada = null;
+        LocalDate fechaSalida = null;
+        
+        if(estadoComboBox.getSelectedItem().toString().equals("Todos")){
+            estado = "";
+        }
+        
+        if(entradaDateChooser.getDate() != null){
+            fechaEntrada = entradaDateChooser.getDate()
+            .toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
+           
+        }
+        if(salidaDateChooser.getDate() != null){
+            fechaSalida = salidaDateChooser.getDate()
+            .toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate(); 
+        }
+        
+        System.out.println("TELEFONO: " + telefono);   
+        System.out.println("IMEI: " + imei); 
+        System.out.println("FECHA ENTRADA: " + fechaEntrada);
+        System.out.println("FECHA SALIDA: " + fechaSalida);
+        System.out.println("ESTADO: " + estado);
+        
+        reparacionesList = rc.getReparacionesList(telefono, imei, fechaEntrada, fechaSalida, estado);
+        cargarTabla(reparacionesList);
+    }//GEN-LAST:event_buscarButtonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -174,13 +254,13 @@ public class ReparacionesFrame extends javax.swing.JFrame {
                 new ReparacionesFrame().setVisible(true);
             }
         });
-    }
+    }  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buscarButton;
     private com.toedter.calendar.JDateChooser entradaDateChooser;
     private javax.swing.JComboBox<String> estadoComboBox;
     private javax.swing.JTextField imeiTextField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -188,8 +268,8 @@ public class ReparacionesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable reparacionesTable;
     private com.toedter.calendar.JDateChooser salidaDateChooser;
+    private javax.swing.JTextField telefonoTextField;
     // End of variables declaration//GEN-END:variables
 }

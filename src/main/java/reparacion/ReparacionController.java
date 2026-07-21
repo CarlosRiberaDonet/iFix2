@@ -5,6 +5,7 @@
 package reparacion;
 
 import dispositivo.DispositivoController;
+import java.time.LocalDate;
 import java.util.List;
 import lineaReparacion.LineaReparacion;
 import lineaReparacion.LineaReparacionController;
@@ -47,20 +48,20 @@ public class ReparacionController {
         return false;
     } 
     
-    // Obtener reparacion del cliente mediante idReparacion
-    public Reparacion getReparacion(Long idReparacion){
-        return ReparacionDao.selectReparacionByid();
-    }
-    
     // Obtener lista reparaciones del cliente
-     public static List<Reparacion> findReparacionesByIdCliente(Long clienteId){ 
+    public List<Reparacion> findReparacionesByIdCliente(Long clienteId){ 
         return ReparacionDao.getReparacionesByIdCliente(clienteId);
     }
      
-   // Obtener lista de reparaciones realizadas en una reparación a un dispositivo
-     public List<LineaReparacion> getLineaReparacionList(Long idReparacion){
-         return LineaReparacionDao.selectLineaReparacion(idReparacion);
-     }
+    // Obtener lista de reparaciones realizadas en una reparación a un dispositivo
+    public List<LineaReparacion> getLineaReparacionList(Long idReparacion){
+        return LineaReparacionDao.selectLineaReparacionList(idReparacion);
+    }
+    
+    // Obtener lista de reparaciones filtrada
+    public List<Reparacion> getReparacionesList(String telefono, String imei, LocalDate fechaEntrada, LocalDate fechaSalida, String estado){      
+       return ReparacionDao.selectReparaciones(telefono, imei, fechaEntrada, fechaSalida, estado);
+    }
      
     // Modificar reparación existente
     public boolean modificarReparacion(Reparacion reparacion){   

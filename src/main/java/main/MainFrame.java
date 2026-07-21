@@ -5,6 +5,7 @@
 package main;
 
 import cliente.ClienteFrame;
+import reparacion.ReparacionesFrame;
 
 /**
  *
@@ -31,7 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         clientesButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        reparacionesButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
 
@@ -44,10 +45,10 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("REPARACIONES");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        reparacionesButton.setText("REPARACIONES");
+        reparacionesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                reparacionesButtonActionPerformed(evt);
             }
         });
 
@@ -67,7 +68,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(153, 153, 153)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(reparacionesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(clientesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -79,7 +80,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addComponent(clientesButton)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(reparacionesButton)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
@@ -99,9 +100,10 @@ public class MainFrame extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       // ReparacionesFramme r = 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void reparacionesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reparacionesButtonActionPerformed
+       ReparacionesFrame reparacionesFrame = new ReparacionesFrame();
+       reparacionesFrame.setVisible(true);
+    }//GEN-LAST:event_reparacionesButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,7 +143,7 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clientesButton;
     private javax.swing.JButton exitButton;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton reparacionesButton;
     // End of variables declaration//GEN-END:variables
 }
