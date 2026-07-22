@@ -1,12 +1,14 @@
 modelo\Modelo.class
 reparacion\DetalleReparacionDialog$1.class
 reparacion\DetalleReparacionDialog$8.class
+print\GeneradorFactura.class
 dispositivo\Dispositivo.class
 cliente\ClientesTable$1.class
 reparacion\ReparacionController.class
 main\MainFrame$3.class
 reparacion\ReparacionesFrame$2.class
 marca\Marca.class
+com\mycompany\ifix2\DatosTaller.class
 lineaReparacion\LineaReparacion.class
 reparacion\ReparacionesClienteFrame$3.class
 cliente\Cliente.class
@@ -19,6 +21,7 @@ reparacion\ReparacionesTable.class
 reparacion\DetalleReparacionDialog$5.class
 main\MainFrame.class
 com\mycompany\ifix2\IFix2.class
+reparacion\DetalleReparacionDialog$10.class
 tipoReparacion\TipoReparacionDao.class
 reparacion\ReparacionesClienteFrame$2.class
 dispositivo\DispositivoController.class

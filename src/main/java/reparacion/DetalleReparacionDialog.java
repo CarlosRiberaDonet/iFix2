@@ -6,17 +6,22 @@ package reparacion;
 
 import cliente.Cliente;
 import dispositivo.Dispositivo;
+import java.awt.Desktop;
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import marca.Marca;
 import marca.MarcaController;
 import modelo.Modelo;
 import modelo.ModeloController;
 import lineaReparacion.LineaReparacion;
+import print.GeneradorFactura;
 import tipoReparacion.TipoReparacion;
 import tipoReparacion.TipoReparacionController;
 import utils.Utils;
@@ -99,6 +104,8 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         addLineaReparacionButton = new javax.swing.JButton();
         delLineaReparacionButton = new javax.swing.JButton();
         modificarButton = new javax.swing.JButton();
+        etiquetaButton = new javax.swing.JButton();
+        facturaButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setSize(new java.awt.Dimension(500, 600));
@@ -224,25 +231,30 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
             }
         });
 
+        etiquetaButton.setText("Etiqueta");
+
+        facturaButton.setText("Factura");
+        facturaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                facturaButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator2)
             .addGroup(layout.createSequentialGroup()
+                .addGap(275, 275, 275)
+                .addComponent(comentariosLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(guardarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(modificarButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -308,13 +320,22 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(45, 45, 45)
                                         .addComponent(jLabel2))
-                                    .addComponent(estadoComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(estadoComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(facturaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(etiquetaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(guardarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(modificarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(275, 275, 275)
-                .addComponent(comentariosLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,7 +401,9 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
                     .addComponent(exitButton)
                     .addComponent(eliminarButton)
                     .addComponent(modificarButton)
-                    .addComponent(guardarButton))
+                    .addComponent(guardarButton)
+                    .addComponent(etiquetaButton)
+                    .addComponent(facturaButton))
                 .addContainerGap())
         );
 
@@ -716,6 +739,34 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_eliminarButtonActionPerformed
 
+    private void facturaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facturaButtonActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setSelectedFile(new File("Factura_" + reparacion.getId() + ".pdf"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
+
+        int seleccion = fileChooser.showSaveDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            String ruta = fileChooser.getSelectedFile().getAbsolutePath();
+            if (!ruta.toLowerCase().endsWith(".pdf")) {
+                ruta += ".pdf";
+            }
+
+            try {
+                GeneradorFactura generador = new GeneradorFactura();
+                generador.generarFacturaPdf(reparacion, ruta);
+                JOptionPane.showMessageDialog(this, "Factura generada correctamente.");
+
+                // Abrir el PDF automáticamente tras generarlo
+                Desktop.getDesktop().open(new File(ruta));
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al generar la factura: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_facturaButtonActionPerformed
+
     // Actualiza importeTextField
     private void actualizarImporte() {
         importe = BigDecimal.ZERO;
@@ -741,7 +792,9 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
     private com.toedter.calendar.JDateChooser entradaDate;
     private javax.swing.JLabel entradaLabel;
     private javax.swing.JComboBox<String> estadoComboBox;
+    private javax.swing.JButton etiquetaButton;
     private javax.swing.JButton exitButton;
+    private javax.swing.JButton facturaButton;
     private javax.swing.JCheckBox garantiaCheckBox;
     private javax.swing.JButton guardarButton;
     private javax.swing.JTextField imeiTextField;

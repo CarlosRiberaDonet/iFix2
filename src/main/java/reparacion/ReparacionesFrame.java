@@ -12,7 +12,7 @@ import java.util.List;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
+// REVISAR NUMERO DE TELEFONO CLIENTE NO COGE LA VARIABLE
 /**
  *
  * @author sovi8
