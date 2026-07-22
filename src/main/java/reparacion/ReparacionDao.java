@@ -167,6 +167,7 @@ public class ReparacionDao {
                     c.setId(rs.getLong("id_cliente"));
                     c.setNombre(rs.getString("nombre_cliente"));
                     c.setApellidos(rs.getString("apellidos"));
+                    c.setTelefono(rs.getString("telefono"));
                     c.setDireccion(rs.getString("direccion"));
                     
                     Marca m = new Marca();

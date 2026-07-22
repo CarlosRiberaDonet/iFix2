@@ -223,13 +223,10 @@ public class ReparacionesFrame extends javax.swing.JFrame {
             .toLocalDate(); 
         }
         
-        System.out.println("TELEFONO: " + telefono);   
-        System.out.println("IMEI: " + imei); 
-        System.out.println("FECHA ENTRADA: " + fechaEntrada);
-        System.out.println("FECHA SALIDA: " + fechaSalida);
-        System.out.println("ESTADO: " + estado);
-        
         reparacionesList = rc.getReparacionesList(telefono, imei, fechaEntrada, fechaSalida, estado);
+        for(Reparacion r : reparacionesList){
+            System.out.println("REPARACION: " + r.toString());
+        }
         listener.setReparacionesList(reparacionesList);
         cargarTabla(reparacionesList);
     }//GEN-LAST:event_buscarButtonActionPerformed
