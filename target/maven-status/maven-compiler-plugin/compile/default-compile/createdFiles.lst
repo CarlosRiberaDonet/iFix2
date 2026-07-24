@@ -1,3 +1,4 @@
+reparacion\ReparacionesTable$2.class
 modelo\Modelo.class
 reparacion\DetalleReparacionDialog$1.class
 reparacion\DetalleReparacionDialog$8.class
@@ -6,9 +7,10 @@ dispositivo\Dispositivo.class
 cliente\ClientesTable$1.class
 reparacion\ReparacionController.class
 main\MainFrame$3.class
-reparacion\ReparacionesFrame$2.class
+reparacion\DetalleReparacionDialog$11.class
 marca\Marca.class
 com\mycompany\ifix2\DatosTaller.class
+reparacion\DetalleReparacionDialog$14.class
 lineaReparacion\LineaReparacion.class
 reparacion\ReparacionesClienteFrame$3.class
 cliente\Cliente.class
@@ -20,6 +22,7 @@ lineaReparacion\LineaReparacionController.class
 reparacion\ReparacionesTable.class
 reparacion\DetalleReparacionDialog$5.class
 main\MainFrame.class
+reparacion\DetalleReparacionDialog$16.class
 com\mycompany\ifix2\IFix2.class
 reparacion\DetalleReparacionDialog$10.class
 tipoReparacion\TipoReparacionDao.class
@@ -27,6 +30,7 @@ reparacion\ReparacionesClienteFrame$2.class
 dispositivo\DispositivoController.class
 modelo\ModeloController.class
 cliente\ClientePanel.class
+reparacion\DetalleReparacionDialog$13.class
 dispositivo\DispositivoDao.class
 main\MainFrame$1.class
 reparacion\ReparacionesFrame$1.class
@@ -47,6 +51,7 @@ tipoReparacion\TipoReparacionController.class
 cliente\ClienteDao.class
 lineaReparacion\LineaReparacionDao.class
 utils\Utils.class
+reparacion\DetalleReparacionDialog$12.class
 reparacion\ReparacionesTable$1.class
 reparacion\ReparacionesClienteFrame$1.class
 cliente\ClienteTableMouseListener.class
@@ -54,6 +59,6 @@ marca\MarcaDao.class
 reparacion\DetalleReparacionDialog$4.class
 reparacion\ReparacionesFrame.class
 tipoReparacion\TipoReparacion.class
-reparacion\ReparacionesClienteFrame$4.class
+reparacion\DetalleReparacionDialog$15.class
 main\MainFrame$2.class
 reparacion\DetalleReparacionDialog$7.class

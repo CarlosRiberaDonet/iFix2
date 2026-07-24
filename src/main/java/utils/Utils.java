@@ -20,7 +20,7 @@ public class Utils {
      public static boolean checkNombre(String input){
 
         if(input == null && !input.trim().isEmpty()){
-            JOptionPane.showMessageDialog(null, "El campo nombre y/o apellidos no puede estar vacío.");
+            JOptionPane.showMessageDialog(null, "El campo nombre y apellidos no puede estar vacío.");
             return false;
         } else{
             return true;

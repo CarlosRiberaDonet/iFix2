@@ -12,7 +12,18 @@ import java.util.List;
  */
 public class TipoReparacionController {
     
-    public static List<TipoReparacion> getReparacionesList(){
+    // Insertar nuevo TipoReparacion
+    public TipoReparacion nuevoTipoReparacion(String nuevoTipoReparacion){
+        return TipoReparacionDao.insertTipoReparacion(nuevoTipoReparacion);
+    }
+    
+    // Modificar TipoReparacion
+    public TipoReparacion modificarTipoReparacion(TipoReparacion tipoReparacion){
+        return TipoReparacionDao.updateTipoReparacion(tipoReparacion);
+    }
+    
+    // Obtener lista de tipos de reparación
+    public List<TipoReparacion> getReparacionesList(){
         return TipoReparacionDao.selectTipoReparacion();
     }
 }

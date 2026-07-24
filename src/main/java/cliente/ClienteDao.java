@@ -21,13 +21,14 @@ public class ClienteDao {
     // INSERTAR CLIENTE
     public static boolean addCliente(Cliente cliente){
         
-        String sql = "INSERT INTO cliente(nombre, apellidos, telefono, direccion) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO cliente(nombre, apellidos, dni, telefono, direccion) VALUES (?, ?, ?, ?, ?)";
         
         try(Connection conn = ConexionBD.connect(); PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1, cliente.getNombre());
             stmt.setString (2, cliente.getApellidos());
-            stmt.setString(3, cliente.getTelefono());
-            stmt.setString(4, cliente.getDireccion());
+            stmt.setString(3, cliente.getDni());
+            stmt.setString(4, cliente.getTelefono());
+            stmt.setString(5, cliente.getDireccion());
             stmt.executeUpdate();
         }catch(SQLException e){
             System.out.println("Error al añadir cliente a la BD" + e.getMessage());
@@ -57,7 +58,7 @@ public class ClienteDao {
     // OBTENER TODOS LOS CLIENTES
     public static List<Cliente> findAll(){
         
-        String sql = "SELECT id, nombre, apellidos, telefono, direccion FROM cliente";
+        String sql = "SELECT id, nombre, apellidos, dni, telefono, direccion FROM cliente";
         List<Cliente> clientesList = new ArrayList<>();
         try( Connection conn = ConexionBD.connect(); PreparedStatement stmt = conn.prepareStatement(sql)){
             ResultSet rs = stmt.executeQuery();
@@ -66,6 +67,7 @@ public class ClienteDao {
                     rs.getLong("id"),
                     rs.getString("nombre"),
                     rs.getString("apellidos"),
+                    rs.getString("dni"),
                     rs.getString("telefono"),
                     rs.getString("direccion")
                 );
@@ -83,7 +85,8 @@ public class ClienteDao {
     // OBTENER CLIENTE MEDIANTE FILTROS 
     public static List<Cliente> selectCliente(String nombre, String apellidos, String telefono){
         
-         String sql = "SELECT id, nombre, apellidos, telefono, direccion FROM cliente WHERE nombre LIKE ? AND apellidos LIKE ? AND telefono LIKE ?";
+         String sql = "SELECT id, nombre, apellidos, dni, telefono, direccion FROM cliente WHERE nombre LIKE ? "
+                 + " AND dni LIKE ? AND apellidos LIKE ? AND telefono LIKE ?";
         List<Cliente> clientesList = new ArrayList<>();
        
         try(Connection conn = ConexionBD.connect(); PreparedStatement stmt = conn.prepareStatement(sql)){
@@ -97,6 +100,7 @@ public class ClienteDao {
                     rs.getLong("id"),
                     rs.getString("nombre"),
                     rs.getString("apellidos"),
+                    rs.getString("dni"),
                     rs.getString("telefono"),
                     rs.getString("direccion")
                 );
@@ -116,6 +120,7 @@ public class ClienteDao {
         
         String sql = "UPDATE cliente SET nombre = ?, "
                 + "apellidos = ?, "
+                + "dni = ?, "
                 + "telefono = ?, "
                 + "direccion = ? "
                 + "WHERE id = ?";
@@ -124,8 +129,9 @@ public class ClienteDao {
             
             stmt.setString(1, cliente.getNombre());
             stmt.setString(2, cliente.getApellidos());
-            stmt.setString(3, cliente.getTelefono());
-            stmt.setString(4, cliente.getDireccion());
+            stmt.setString(3, cliente.getDni());
+            stmt.setString(4, cliente.getTelefono());
+            stmt.setString(5, cliente.getDireccion());
             
             stmt.setLong(5, cliente.getId());
             

@@ -53,14 +53,14 @@ public class ReparacionController {
         return ReparacionDao.getReparacionesByIdCliente(clienteId);
     }
      
-    // Obtener lista de reparaciones realizadas en una reparación a un dispositivo
+    // Obtener lista de lineaReparacion realizadas en una reparación a un dispositivo
     public List<LineaReparacion> getLineaReparacionList(Long idReparacion){
         return LineaReparacionDao.selectLineaReparacionList(idReparacion);
     }
     
     // Obtener lista de reparaciones filtrada
-    public List<Reparacion> getReparacionesList(String telefono, String imei, LocalDate fechaEntrada, LocalDate fechaSalida, String estado){      
-       return ReparacionDao.selectReparaciones(telefono, imei, fechaEntrada, fechaSalida, estado);
+    public List<Reparacion> getReparacionesList(String telefono, String imei, LocalDate fechaEntrada, LocalDate fechaSalida, Boolean garantia, String estado){      
+       return ReparacionDao.selectReparaciones(telefono, imei, fechaEntrada, fechaSalida, garantia, estado);
     }
      
     // Modificar reparación existente

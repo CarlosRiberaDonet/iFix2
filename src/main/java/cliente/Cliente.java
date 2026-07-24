@@ -15,20 +15,23 @@ public class Cliente {
     private String apellidos;
     private String telefono;
     private String direccion;
+    private String dni;
     
     // CONSTRUCTOR 
     
-    public Cliente(Long id, String nombre, String apellidos, String telefono, String direccion) {
+    public Cliente(Long id, String nombre, String apellidos, String dni, String telefono, String direccion) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
+        this.dni = dni;
         this.telefono = telefono;
         this.direccion = direccion;
     }
 
-    public Cliente(String nombre, String apellidos, String telefono, String direccion) {
+    public Cliente(String nombre, String apellidos, String dni, String telefono, String direccion) {
         this.nombre = nombre;
         this.apellidos = apellidos;
+        this.dni = dni;
         this.telefono = telefono;
         this.direccion = direccion;
     }
@@ -77,5 +80,12 @@ public class Cliente {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-    
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
 }

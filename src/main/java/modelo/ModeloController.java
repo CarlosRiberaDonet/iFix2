@@ -5,6 +5,7 @@
 package modelo;
 
 import java.util.List;
+import marca.Marca;
 
 /**
  *
@@ -12,6 +13,17 @@ import java.util.List;
  */
 public class ModeloController {
     
+    // Añadir nuevo Modelo
+    public Modelo nuevoModelo(Marca marca, String nuevoModelo){
+        return ModeloDao.insertModelo(marca, nuevoModelo);
+    }  
+    
+    // Modificar nombre de modelo
+    public Modelo modificarModelo(Modelo modelo){
+        return ModeloDao.updateModelo(modelo);
+    }
+    
+    // Obtener lista de todos los Modelos
     public static List<Modelo> getModelos(){
         return ModeloDao.selectModelos();
     }

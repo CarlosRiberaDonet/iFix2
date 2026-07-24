@@ -5,11 +5,9 @@
 package reparacion;
 
 import cliente.Cliente;
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 public class ReparacionesClienteFrame extends javax.swing.JFrame {
 
     private Cliente cliente;
+    private ReparacionesTable reparacionesTable;
     private List<Reparacion> reparacionesList = new ArrayList<>();
     private ReparacionTableMouseListener listener;
     private ReparacionController rc = new ReparacionController();
@@ -25,16 +24,25 @@ public class ReparacionesClienteFrame extends javax.swing.JFrame {
     public ReparacionesClienteFrame(Cliente cliente, List<Reparacion> reparacionesList) {
         initComponents();
         setTitle("Reparaciones Cliente");
-        this.cliente = cliente;
-        this.reparacionesList = reparacionesList;
-        clienteLabel.setText(cliente.getNombre().toUpperCase() + " " + cliente.getApellidos().toUpperCase());
-        telefonoLabel.setText(cliente.getTelefono());
-        direccionLabel.setText(cliente.getDireccion().toUpperCase());
-        cargarTabla(reparacionesList);
+        setSize(900, 800);
         setResizable(false);
+        setLocationRelativeTo(null);
+        
+        
+        // Crear la tabla reutilizable
+        reparacionesTable = new ReparacionesTable(reparacionesList);
+        
+        // Añadirla al panel
+        tablePanel.setLayout(new BorderLayout());
+        tablePanel.add(reparacionesTable, BorderLayout.CENTER);
+        
+        cargarCliente(cliente);
+        cargarTabla(reparacionesList);    
+        
+        
         listener = new ReparacionTableMouseListener(
             this,
-            reparacionesTable,
+            reparacionesTable.getTablaReparaciones(),
             cliente,
             reparacionesList
         );
@@ -43,37 +51,21 @@ public class ReparacionesClienteFrame extends javax.swing.JFrame {
        
     }
     
+    
+    // Cargar datos del cliente
+    public void cargarCliente(Cliente cliente){
+        this.cliente = cliente;
+        clienteLabel.setText(cliente.getNombre().toUpperCase() + " " + cliente.getApellidos().toUpperCase());
+        dniLabel.setText(cliente.getDni());
+        telefonoLabel.setText(cliente.getTelefono());
+        direccionLabel.setText(cliente.getDireccion().toUpperCase());
+        
+    }
+    
     public void cargarTabla(List<Reparacion> reparacionesList) {
-
-        DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] {
-                "ENTRADA", "SALIDA", "MARCA", "MODELO", "IMEI", "ESTADO", "IMPORTE",
-        }) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        for (Reparacion r : reparacionesList) {
-            modelo.addRow(new Object[] {
-                    r.getFechaEntrada(),
-                    r.getFechaSalida(),
-                    r.getDispositivo().getModelo().getMarca(),
-                    r.getDispositivo().getModelo(),
-                    r.getDispositivo().getImei(),
-                    r.getEstado(),
-                    r.getImporte()
-            });
-        }
-
-        reparacionesTable.setModel(modelo);
-
-        // Centrar el contenido de todas las columnas
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < reparacionesTable.getColumnCount(); i++) {
-            reparacionesTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
+         this.reparacionesList = reparacionesList;
+         
+         reparacionesTable.setReparaciones(reparacionesList);
     }
     
     @SuppressWarnings("unchecked")
@@ -86,15 +78,23 @@ public class ReparacionesClienteFrame extends javax.swing.JFrame {
         añadirButton = new javax.swing.JButton();
         actualizarListaButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        reparacionesTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        dniLabel = new javax.swing.JLabel();
+        tablePanel = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        entradaDateChooser = new com.toedter.calendar.JDateChooser();
+        jLabel6 = new javax.swing.JLabel();
+        salidaDateChooser = new com.toedter.calendar.JDateChooser();
+        jLabel7 = new javax.swing.JLabel();
+        buscarButton = new javax.swing.JButton();
+        estadoComboBox = new javax.swing.JComboBox<>();
+        garantiaCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         clienteLabel.setText("Cliente:");
 
@@ -123,80 +123,147 @@ public class ReparacionesClienteFrame extends javax.swing.JFrame {
             }
         });
 
-        reparacionesTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(reparacionesTable);
-
         jLabel1.setText("Cliente:");
 
         jLabel2.setText("Teléfono:");
 
         jLabel3.setText("Dirección:");
 
+        jLabel4.setText("DNI/NIF:");
+
+        dniLabel.setText("DNI/NIF");
+
+        javax.swing.GroupLayout tablePanelLayout = new javax.swing.GroupLayout(tablePanel);
+        tablePanel.setLayout(tablePanelLayout);
+        tablePanelLayout.setHorizontalGroup(
+            tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        tablePanelLayout.setVerticalGroup(
+            tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 427, Short.MAX_VALUE)
+        );
+
+        jLabel5.setText("F.Entrada:");
+
+        jLabel6.setText("F.Salida:");
+
+        jLabel7.setText("Estado:");
+
+        buscarButton.setText("Buscar");
+        buscarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarButtonActionPerformed(evt);
+            }
+        });
+
+        estadoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Presupuesto", "Pieza Pedida", "En Reparación", "Reparado", "Pagado", "No Pagado" }));
+
+        garantiaCheckBox.setText("Garantía");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator2)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(296, 296, 296)
+                                .addGap(267, 267, 267)
                                 .addComponent(actualizarListaButton)
                                 .addGap(18, 18, 18)
                                 .addComponent(añadirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)
+                                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(clienteLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dniLabel)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(telefonoLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(direccionLabel)))
+                        .addGap(93, 93, 93)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(clienteLabel)
-                        .addGap(143, 143, 143)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(telefonoLabel)
-                        .addGap(82, 82, 82)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(direccionLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(entradaDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(salidaDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(garantiaCheckBox)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(buscarButton)))
+                        .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(clienteLabel)
-                    .addComponent(telefonoLabel)
-                    .addComponent(jLabel2)
-                    .addComponent(direccionLabel)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(clienteLabel))
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(dniLabel)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(telefonoLabel)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel5))
+                            .addComponent(entradaDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
+                                .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(direccionLabel)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel6))
+                            .addComponent(salidaDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(buscarButton)
+                                .addComponent(garantiaCheckBox)))))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(actualizarListaButton)
                     .addComponent(añadirButton)
                     .addComponent(exitButton))
-                .addGap(21, 21, 21))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -235,19 +302,32 @@ public class ReparacionesClienteFrame extends javax.swing.JFrame {
         listener.setReparacionesList(reparacionesList);
     }//GEN-LAST:event_actualizarListaButtonActionPerformed
 
+    private void buscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonActionPerformed
+        
+    }//GEN-LAST:event_buscarButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton actualizarListaButton;
     private javax.swing.JButton añadirButton;
+    private javax.swing.JButton buscarButton;
     private javax.swing.JLabel clienteLabel;
     private javax.swing.JLabel direccionLabel;
+    private javax.swing.JLabel dniLabel;
+    private com.toedter.calendar.JDateChooser entradaDateChooser;
+    private javax.swing.JComboBox<String> estadoComboBox;
     private javax.swing.JButton exitButton;
+    private javax.swing.JCheckBox garantiaCheckBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable reparacionesTable;
+    private com.toedter.calendar.JDateChooser salidaDateChooser;
+    private javax.swing.JPanel tablePanel;
     private javax.swing.JLabel telefonoLabel;
     // End of variables declaration//GEN-END:variables
 }

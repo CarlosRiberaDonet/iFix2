@@ -101,7 +101,7 @@ public class ReparacionDao {
     }
     
     // Obtener lista de reparaciones mediante filtros
-    public static List<Reparacion> selectReparaciones(String telefono, String imei, LocalDate fechaEntrada, LocalDate fechaSalida, String estado){
+    public static List<Reparacion> selectReparaciones(String telefono, String imei, LocalDate fechaEntrada, LocalDate fechaSalida, Boolean garantia, String estado){
         
         List<Reparacion> reparacionesList = new ArrayList<>();
         
@@ -135,6 +135,9 @@ public class ReparacionDao {
                     sql.append(" AND r.fecha_entrada >= ?");
                 } else if (fechaSalida != null) {
                     sql.append(" AND r.fecha_entrada <= ?");
+                }
+                if(garantia != null){
+                    sql.append(" AND r.garantia = ?"); // SEGUIR IMPLEMENTANDO LA BUSQUEDA ÂRA REPARACIONESCLIENTEFRAME
                 }
                 if(!estado.isBlank()){
                     sql.append(" AND r.estado = ?");

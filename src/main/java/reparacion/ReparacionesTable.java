@@ -9,6 +9,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -16,45 +20,111 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ReparacionesTable extends javax.swing.JPanel {
 
-    private JTable tablaReparaciones = new JTable();
-    private DefaultTableModel reparacionesTable = new DefaultTableModel();
-    
+    private JTable tablaReparaciones;
+    private DefaultTableModel reparacionesTable;
+
     public ReparacionesTable(List<Reparacion> reparacionesList) {
-        initComponents();
-         String[] columnas = {"ENTRADA", "SALIDA", "CLIENTE", "DISPOSITIVO", "ESTADO", "IMPORTE"};
-        reparacionesTable = new DefaultTableModel(columnas, 0){
+
+        String[] columnas = {
+            "ENTRADA",
+            "SALIDA",
+            "CLIENTE",
+            "DISPOSITIVO",
+            "ESTADO",
+            "IMPORTE"
+        };
+
+        reparacionesTable = new DefaultTableModel(columnas, 0) {
+
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        System.out.println("REPARACIONES TABLE");
+
         tablaReparaciones = new JTable(reparacionesTable);
+        
+        // Colorear filas según estado
+       tablaReparaciones.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+
+    @Override
+    public Component getTableCellRendererComponent(
+            JTable table,
+            Object value,
+            boolean isSelected,
+            boolean hasFocus,
+            int row,
+            int column) {
+
+        Component c = super.getTableCellRendererComponent(
+                table, value, isSelected, hasFocus, row, column);
+
+        // Centrar el contenido de todas las celdas
+        setHorizontalAlignment(SwingConstants.CENTER);
+
+        if (isSelected) {
+            c.setBackground(table.getSelectionBackground());
+            c.setForeground(table.getSelectionForeground());
+        } else {
+
+            String estado = table.getValueAt(row, 4).toString().trim().toUpperCase();
+
+            switch (estado) {
+
+                case "PAGADO":
+                    c.setBackground(new Color(198, 239, 206));   // Verde claro
+                    c.setForeground(Color.BLACK);
+                    break;
+
+                case "NO PAGADO":
+                    c.setBackground(new Color(255, 235, 156));   // Amarillo claro
+                    c.setForeground(Color.BLACK);
+                    break;
+
+                default:
+                    c.setBackground(Color.WHITE);
+                    c.setForeground(Color.BLACK);
+                    break;
+            }
+        }
+
+            return c;
+        }
+    });
+
         JScrollPane scrollPane = new JScrollPane(tablaReparaciones);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(scrollPane);
+
         setReparaciones(reparacionesList);
     }
-    
-     public void setReparaciones(List<Reparacion> reparacionesList){
+
+    public void setReparaciones(List<Reparacion> reparacionesList) {
+
         reparacionesTable.setRowCount(0);
+
         for (Reparacion r : reparacionesList) {
-            Object[] fila = {
+
+            reparacionesTable.addRow(new Object[]{
                 r.getFechaEntrada(),
                 r.getFechaSalida(),
-                r.getDispositivo().getCliente().getNombre().toUpperCase() + " " + r.getDispositivo().getCliente().getApellidos(),
-                r.getDispositivo().getModelo().getNombre().toUpperCase(),
+                r.getDispositivo().getCliente().getNombre().toUpperCase()
+                        + " "
+                        + r.getDispositivo().getCliente().getApellidos().toUpperCase(),
+                r.getDispositivo().getModelo().getMarca().getNombre().toUpperCase()
+                        + " "
+                        + r.getDispositivo().getModelo().getNombre().toUpperCase(),
                 r.getEstado().toUpperCase(),
                 r.getImporte()
-            };
-            reparacionesTable.addRow(fila);
+            });
         }
-   }
-   
-   public JTable getTablaReparaciones(){
-       return tablaReparaciones;
-   }
+    }
+
+    public JTable getTablaReparaciones() {
+        return tablaReparaciones;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,11 +139,11 @@ public class ReparacionesTable extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 626, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 475, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
