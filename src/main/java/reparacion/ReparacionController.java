@@ -5,6 +5,7 @@
 package reparacion;
 
 import dispositivo.DispositivoController;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import lineaReparacion.LineaReparacion;
@@ -48,6 +49,11 @@ public class ReparacionController {
         return false;
     } 
     
+    // Obtener reparación mediante idReparacion
+    public Reparacion getReparacionById(Long idReparacion){
+        return ReparacionDao.selectReparacionById(idReparacion);
+    }
+    
     // Obtener lista reparaciones del cliente
     public List<Reparacion> findReparacionesByIdCliente(Long clienteId){ 
         return ReparacionDao.getReparacionesByIdCliente(clienteId);
@@ -59,8 +65,8 @@ public class ReparacionController {
     }
     
     // Obtener lista de reparaciones filtrada
-    public List<Reparacion> getReparacionesList(String telefono, String imei, LocalDate fechaEntrada, LocalDate fechaSalida, Boolean garantia, String estado){      
-       return ReparacionDao.selectReparaciones(telefono, imei, fechaEntrada, fechaSalida, garantia, estado);
+    public List<Reparacion> getReparacionesList(String telefono, String imei, String estado, String dni, LocalDate fechaEntrada, LocalDate fechaSalida){      
+       return ReparacionDao.selectReparacionesList(telefono, imei, estado, dni, fechaEntrada, fechaSalida);
     }
      
     // Modificar reparación existente
@@ -85,5 +91,16 @@ public class ReparacionController {
     // Eliminar reparacion
     public boolean eliminarReparacion(Long idReparacion){
         return ReparacionDao.deleteReparacion(idReparacion);
+    }
+    
+     // Calcular importe total
+    public BigDecimal importeTotal(List<Reparacion> reparacionesList){
+        
+        BigDecimal importeTotal = BigDecimal.ZERO;
+        for(Reparacion r : reparacionesList){
+            importeTotal = importeTotal.add(r.getImporte());
+        }
+        
+        return importeTotal;
     }
 }

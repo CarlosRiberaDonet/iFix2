@@ -21,7 +21,7 @@ public class ReparacionTableMouseListener extends MouseAdapter{
     private JTable reparacionesTable;
     private List<Reparacion> reparacionesList;
     
-    public ReparacionTableMouseListener(Frame parent, JTable reparacionesTable, Cliente cliente, List<Reparacion> reparacionesList) {
+    public ReparacionTableMouseListener(Frame parent, JTable reparacionesTable, List<Reparacion> reparacionesList) {
         this.parent = parent;
         this.reparacionesTable = reparacionesTable;
         this.reparacionesList = reparacionesList;

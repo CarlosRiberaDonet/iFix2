@@ -12,14 +12,14 @@ import javax.swing.SwingUtilities;
  *
  * @author sovi8
  */
-public class ClientePanel extends javax.swing.JPanel{
+public class CrearClientePanel extends javax.swing.JPanel{
     
     private Cliente cliente;
     private boolean newCliente;
     /**
      * Creates new form NuevoCliente
      */
-    public ClientePanel(Cliente cliente , boolean newCliente) {
+    public CrearClientePanel(Cliente cliente , boolean newCliente) {
         initComponents();
         this.cliente = cliente;
         this.newCliente = newCliente;

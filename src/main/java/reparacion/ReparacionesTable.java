@@ -31,7 +31,7 @@ public class ReparacionesTable extends javax.swing.JPanel {
             "CLIENTE",
             "DISPOSITIVO",
             "ESTADO",
-            "IMPORTE"
+            "IMPORTE",
         };
 
         reparacionesTable = new DefaultTableModel(columnas, 0) {

@@ -28,8 +28,8 @@ public class ClienteController {
     }
     
     // BUSCAR CLIENTES
-    public static List<Cliente> findCliente(String nombre, String apellidos, String telefono){
-        return ClienteDao.selectCliente(nombre, apellidos, telefono);
+    public static List<Cliente> findCliente(String nombre, String apellidos, String dni, String telefono){
+        return ClienteDao.selectCliente(nombre, apellidos, dni, telefono);
     }
     
     // Modificar cliente

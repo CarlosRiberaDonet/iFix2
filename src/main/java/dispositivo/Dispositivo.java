@@ -14,13 +14,15 @@ import modelo.Modelo;
 public class Dispositivo {
     private Long id;
     private String imei;
+    private String codigoDesbloqueo;
     private Modelo modelo;
     private Cliente cliente;
 
     
     // CONSTRUCTOR
-    public Dispositivo(String imei,  Modelo modelo, Cliente cliente) {
+    public Dispositivo(String imei, String codigoDesbloqueo, Modelo modelo, Cliente cliente) {
         this.imei = imei;
+        this.codigoDesbloqueo = codigoDesbloqueo;
         this.modelo = modelo;
         this.cliente = cliente;
     }
@@ -44,6 +46,18 @@ public class Dispositivo {
     public void setImei(String imei) {
         this.imei = imei;
     }
+    
+     public String getCodigoDesbloqueo() {
+        return codigoDesbloqueo;
+    }
+
+    public void setCodigoDesbloqueo(String codigoDesbloqueo) {
+        this.codigoDesbloqueo = codigoDesbloqueo;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
 
     public Modelo getModelo() {
         return modelo;
@@ -52,11 +66,7 @@ public class Dispositivo {
     public void setModelo(Modelo modelo) {
         this.modelo = modelo;
     }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
+    
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }

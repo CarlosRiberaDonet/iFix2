@@ -27,17 +27,19 @@ public class ClienteFrame extends JFrame{
     private ClientesTable tablePanel;
     private JTextField nombreTextField;
     private JTextField apellidosTextField;
+    private JTextField dniTextField;
     private JTextField telefonoTextField;
     private List<Cliente> clientesList = new ArrayList<>();
     
 
     public ClienteFrame() {
         setTitle("CLIENTES");
-        setSize(900, 800);
+        setSize(930, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         initUI();
-        tablaClientes.addMouseListener(new ClienteTableMouseListener(tablaClientes, clientesList)); // Listener que abre las reparaciones del cliente
+        // Listener que abre las reparaciones del cliente
+        tablaClientes.addMouseListener(new ClienteTableMouseListener(tablaClientes, clientesList));
     }
 
     private void initUI() {
@@ -48,50 +50,58 @@ public class ClienteFrame extends JFrame{
 
         nombreTextField = new JTextField(10);
         apellidosTextField = new JTextField(10);
+        dniTextField = new JTextField(9);
         telefonoTextField = new JTextField(10);
 
         JButton buscarButton = new JButton("Buscar");
         JButton crearClienteButton = new JButton("Crear");
         JButton modificarClienteButton = new JButton("Modificar");
-        JButton eliminarCliente = new JButton("Eliminar");
+        // JButton eliminarCliente = new JButton("Eliminar");
         buscarButton.addActionListener(e -> buscarCliente());
         crearClienteButton.addActionListener(e -> abrirCrearCliente());
         modificarClienteButton.addActionListener(e -> modificarCliente());
-        eliminarCliente.addActionListener(e -> eliminarCliente());
+        // eliminarCliente.addActionListener(e -> eliminarCliente());
 
         topPanel.add(new JLabel("Nombre:"));
         topPanel.add(nombreTextField);
+        
         topPanel.add(new JLabel("Apellidos:"));
         topPanel.add(apellidosTextField);
+        
+        topPanel.add(new JLabel("DNI/NIF:"));
+        topPanel.add(dniTextField);
+        
         topPanel.add(new JLabel("Teléfono:"));
         topPanel.add(telefonoTextField);
+        
         topPanel.add(buscarButton);
         topPanel.add(crearClienteButton);
         topPanel.add(modificarClienteButton);
-        topPanel.add(eliminarCliente);
+        // topPanel.add(eliminarCliente);
 
         add(topPanel, BorderLayout.NORTH);
         tablePanel = new ClientesTable();
         tablaClientes = tablePanel.getTablaClientes(); 
         add(tablePanel, BorderLayout.CENTER);
         
-        eliminarCliente.setEnabled(false); // Deshabilito eliminar cliente hasta nueva implementación (ON DELETE CASCADE)
+        // eliminarCliente.setEnabled(false); // Deshabilito eliminar cliente hasta nueva implementación (ON DELETE CASCADE)
     }
 
     private void buscarCliente(){    
         String nombre = nombreTextField.getText();
         String apellidos = apellidosTextField.getText();
+        String dni = dniTextField.getText();
         String telefono = telefonoTextField.getText();
         
         clientesList.clear();
 
         // Listar todos los clientes
-        if(nombreTextField.getText().isEmpty() && apellidosTextField.getText().isEmpty() && telefonoTextField.getText().isEmpty()){
+        if(nombreTextField.getText().isEmpty() && apellidosTextField.getText().isEmpty()&& dniTextField.getText().isEmpty() && telefonoTextField.getText().isEmpty()){
            clientesList.addAll(ClienteController.getAllClientes());
         }
         // Buscar cliente mediante parámetros
         else{
-            clientesList.addAll(ClienteController.findCliente(nombre, apellidos, telefono)); 
+            clientesList.addAll(ClienteController.findCliente(nombre, apellidos, dni, telefono)); 
         }
         tablePanel.cargarClientes(clientesList);
     }
@@ -101,11 +111,11 @@ public class ClienteFrame extends JFrame{
         dialog.setSize(400, 300);
         dialog.setLocationRelativeTo(this);
         dialog.setLayout(new BorderLayout());
-        dialog.add(new ClientePanel(null, true), BorderLayout.CENTER);
+        dialog.add(new CrearClientePanel(null, true), BorderLayout.CENTER);
         dialog.setVisible(true);
     }
     
-    private void eliminarCliente(){
+    /*private void eliminarCliente(){
         int filaSelect = tablaClientes.getSelectedRow();
         if(filaSelect >= 0){
             Long idCliente = (Long) tablaClientes.getValueAt(filaSelect, 0);
@@ -117,7 +127,7 @@ public class ClienteFrame extends JFrame{
                 JOptionPane.showMessageDialog(this, "No se ha podido eliminar el cliente.","ERROR",  JOptionPane.ERROR_MESSAGE);
             }
         }
-    }
+    }*/
     
     private void modificarCliente(){
         int filaSelect = tablaClientes.getSelectedRow();
@@ -129,7 +139,7 @@ public class ClienteFrame extends JFrame{
                     dialog.setSize(400, 300);
                     dialog.setLocationRelativeTo(this);
                     dialog.setLayout(new BorderLayout());
-                    dialog.add(new ClientePanel(c, false), BorderLayout.CENTER);
+                    dialog.add(new CrearClientePanel(c, false), BorderLayout.CENTER);
                     dialog.setVisible(true);
                 }
             }

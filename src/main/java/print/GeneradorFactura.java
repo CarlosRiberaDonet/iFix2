@@ -31,6 +31,7 @@ import reparacion.Reparacion;
  *
  * @author sovi8
  */
+
 public class GeneradorFactura {
 
     private static final BigDecimal IVA_PORCENTAJE = new BigDecimal("0.21");

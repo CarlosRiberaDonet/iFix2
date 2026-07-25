@@ -1,3 +1,4 @@
+C:\Proyectos\iFix2\src\main\java\print\Recibi.java
 C:\Proyectos\iFix2\src\main\java\marca\Marca.java
 C:\Proyectos\iFix2\src\main\java\cliente\Cliente.java
 C:\Proyectos\iFix2\src\main\java\dispositivo\DispositivoDao.java
@@ -12,6 +13,7 @@ C:\Proyectos\iFix2\src\main\java\marca\MarcaController.java
 C:\Proyectos\iFix2\src\main\java\print\GeneradorFactura.java
 C:\Proyectos\iFix2\src\main\java\utils\Utils.java
 C:\Proyectos\iFix2\src\main\java\modelo\Modelo.java
+C:\Proyectos\iFix2\src\main\java\cliente\CrearClientePanel.java
 C:\Proyectos\iFix2\src\main\java\dispositivo\DispositivoController.java
 C:\Proyectos\iFix2\src\main\java\tipoReparacion\TipoReparacion.java
 C:\Proyectos\iFix2\src\main\java\reparacion\ReparacionDao.java
@@ -22,7 +24,6 @@ C:\Proyectos\iFix2\src\main\java\reparacion\ReparacionController.java
 C:\Proyectos\iFix2\src\main\java\cliente\ClienteDao.java
 C:\Proyectos\iFix2\src\main\java\tipoReparacion\TipoReparacionDao.java
 C:\Proyectos\iFix2\src\main\java\main\MainFrame.java
-C:\Proyectos\iFix2\src\main\java\cliente\ClientePanel.java
 C:\Proyectos\iFix2\src\main\java\reparacion\Reparacion.java
 C:\Proyectos\iFix2\src\main\java\reparacion\ReparacionTableMouseListener.java
 C:\Proyectos\iFix2\src\main\java\cliente\ClientesTable.java

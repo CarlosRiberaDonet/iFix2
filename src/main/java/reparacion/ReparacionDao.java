@@ -28,11 +28,40 @@ import modelo.Modelo;
  */
 public class ReparacionDao {
     
+    // Crear nueva reparación
+    public static Long insertReparacion(Reparacion reparacion){
+        
+        String sql = "INSERT INTO reparacion (id_dispositivo, fecha_entrada, fecha_salida, garantia, comentarios, estado, importe) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+         try(Connection conn =  ConexionBD.connect(); PreparedStatement stmt = conn.prepareStatement(sql,  Statement.RETURN_GENERATED_KEYS)){
+            
+            stmt.setLong(1, reparacion.getDispositivo().getId());
+            stmt.setDate(2,java.sql.Date.valueOf(reparacion.getFechaEntrada()));
+            stmt.setDate(3, java.sql.Date.valueOf(reparacion.getFechaSalida()));
+            stmt.setBoolean(4, reparacion.isGarantia());
+            stmt.setString(5, reparacion.getComentarios());
+            stmt.setString(6, reparacion.getEstado());
+            stmt.setBigDecimal(7, reparacion.getImporte());
+            
+            int filasAfectadas = stmt.executeUpdate();
+            
+            if(filasAfectadas > 0){
+                 ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                return rs.getLong(1);
+            }
+            }
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+        return -1L;
+    }   
+    
     // Obtener lista  reparaciones mediante idCliente
     public static List<Reparacion> getReparacionesByIdCliente(Long idCliente) {
 
         String SELECT_REPARACIONES_BY_ID_CLIENTE = "SELECT r.id AS id_reparacion, r.fecha_entrada, r.fecha_salida, r.garantia, r.comentarios, r.estado, r.importe, "
-                + "c.id AS id_cliente, c.nombre AS nombre_cliente, c.apellidos, c.telefono, c.direccion, "
+                + "c.id AS id_cliente, c.nombre AS nombre_cliente, c.apellidos, c.dni, c.telefono, c.direccion, "
                 + "d.id AS id_dispositivo, d.imei, "
                 + "mo.id AS id_modelo, mo.nombre AS nombre_modelo, "
                 + "m.id AS id_marca, m.nombre AS nombre_marca "
@@ -57,6 +86,7 @@ public class ReparacionDao {
                     c.setId(idCliente);
                     c.setNombre(rs.getString("nombre_cliente"));
                     c.setApellidos(rs.getString("apellidos"));
+                    c.setDni(rs.getString("dni"));
                     c.setTelefono(rs.getString("telefono"));
                     c.setDireccion(rs.getString("direccion"));
 
@@ -101,25 +131,22 @@ public class ReparacionDao {
     }
     
     // Obtener lista de reparaciones mediante filtros
-    public static List<Reparacion> selectReparaciones(String telefono, String imei, LocalDate fechaEntrada, LocalDate fechaSalida, Boolean garantia, String estado){
+    public static List<Reparacion> selectReparacionesList(String telefono, String imei, String estado, String dni,
+            LocalDate fechaEntrada, LocalDate fechaSalida){
         
         List<Reparacion> reparacionesList = new ArrayList<>();
         
         StringBuilder sql = new StringBuilder(
-                "SELECT r.id AS id_reparacion, r.fecha_entrada, r.fecha_salida, r.garantia, r.comentarios, r.estado, r.importe, "
-                + "c.id AS id_cliente, c.nombre AS nombre_cliente, c.apellidos, c.telefono, c.direccion, "
+                "SELECT r.id AS id_reparacion, r.fecha_entrada, r.fecha_salida, r.garantia, r.estado, r.importe, "
+                + "c.id AS id_cliente, c.nombre AS nombre_cliente, c.apellidos, c.dni, c.telefono, c.direccion, "
                 + "d.id AS id_dispositivo, d.imei, "
                 + "mo.id AS id_modelo, mo.nombre AS nombre_modelo, "
-                + "m.id AS id_marca, m.nombre AS nombre_marca,"
-                + "lr.id AS id_linea_reparacion, lr.precio, "
-                + "tr.id AS id_tipo_reparacion, tr.nombre AS nombre_tipo_reparacion "
+                + "m.id AS id_marca, m.nombre AS nombre_marca "
                 + "FROM reparacion r "
                 + "JOIN dispositivo d ON r.id_dispositivo = d.id "
                 + "JOIN cliente c ON d.id_cliente = c.id "
                 + "JOIN modelo mo ON d.id_modelo = mo.id "
                 + "JOIN marca m ON m.id = mo.id_marca "
-                + "JOIN linea_reparacion lr ON lr.id_reparacion = r.id "
-                + "JOIN tipo_reparacion tr ON lr.id_tipo_reparacion = tr.id "
                 + "WHERE 1=1"
                 );     
                 
@@ -129,20 +156,20 @@ public class ReparacionDao {
                 if(!imei.isBlank()){
                     sql.append(" AND d.imei = ?");
                 }
-               if (fechaEntrada != null && fechaSalida != null) {
+                if(!estado.equals("Todos")){
+                    sql.append(" AND r.estado = ?");
+                }
+                 if(!dni.isBlank()){
+                    sql.append(" AND c.dni = ?");
+                }
+                if (fechaEntrada != null && fechaSalida != null) {
                     sql.append(" AND r.fecha_entrada BETWEEN ? AND ?");
                 } else if (fechaEntrada != null) {
                     sql.append(" AND r.fecha_entrada >= ?");
                 } else if (fechaSalida != null) {
                     sql.append(" AND r.fecha_entrada <= ?");
                 }
-                if(garantia != null){
-                    sql.append(" AND r.garantia = ?"); // SEGUIR IMPLEMENTANDO LA BUSQUEDA ÂRA REPARACIONESCLIENTEFRAME
-                }
-                if(!estado.isBlank()){
-                    sql.append(" AND r.estado = ?");
-                }
-                
+               
                 try(Connection conn = ConexionBD.connect(); PreparedStatement stmt = conn.prepareStatement(sql.toString())){
                     
                 int index = 1;
@@ -153,15 +180,18 @@ public class ReparacionDao {
                 if(!imei.isBlank()){
                     stmt.setString(index++, imei);
                 }
+                if(!estado.equals("Todos")){
+                    stmt.setString(index++, estado);
+                }
+                if(!dni.isBlank()){
+                    stmt.setString(index++, dni);
+                }
                 if(fechaEntrada != null){
                     stmt.setDate(index++,java.sql.Date.valueOf(fechaEntrada));
                 }
                 if(fechaSalida != null){
                     stmt.setDate(index++, java.sql.Date.valueOf(fechaSalida));
-                }
-                if(!estado.isBlank()){
-                    stmt.setString(index++, estado);
-                }
+                }                
                 
                 ResultSet rs = stmt.executeQuery();
                 
@@ -170,6 +200,7 @@ public class ReparacionDao {
                     c.setId(rs.getLong("id_cliente"));
                     c.setNombre(rs.getString("nombre_cliente"));
                     c.setApellidos(rs.getString("apellidos"));
+                    c.setDni(rs.getString("dni"));
                     c.setTelefono(rs.getString("telefono"));
                     c.setDireccion(rs.getString("direccion"));
                     
@@ -194,10 +225,8 @@ public class ReparacionDao {
                     r.setFechaEntrada(rs.getDate("fecha_entrada").toLocalDate());
                     r.setFechaSalida(rs.getDate("fecha_salida").toLocalDate());
                     r.setGarantia(rs.getBoolean("garantia"));
-                    r.setComentarios(rs.getString("comentarios"));
                     r.setEstado(rs.getString("estado"));
                     r.setImporte(rs.getBigDecimal("importe"));
-                    r.setLineaReparacion(LineaReparacionDao.selectLineaReparacionList(r.getId()));
         
                     reparacionesList.add(r);
                 }
@@ -209,34 +238,17 @@ public class ReparacionDao {
         return reparacionesList;
     }
     
-    // Crear nueva reparación
-    public static Long insertReparacion(Reparacion reparacion){
+   // Obtener detalles de una reparación mediante idReparacion
+    public static Reparacion selectReparacionById(Long idReparacion){
         
-        String sql = "INSERT INTO reparacion (id_dispositivo, fecha_entrada, fecha_salida, garantia, comentarios, estado, importe) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-         try(Connection conn =  ConexionBD.connect(); PreparedStatement stmt = conn.prepareStatement(sql,  Statement.RETURN_GENERATED_KEYS)){
-            
-            stmt.setLong(1, reparacion.getDispositivo().getId());
-            stmt.setDate(2,java.sql.Date.valueOf(reparacion.getFechaEntrada()));
-            stmt.setDate(3, java.sql.Date.valueOf(reparacion.getFechaSalida()));
-            stmt.setBoolean(4, reparacion.isGarantia());
-            stmt.setString(5, reparacion.getComentarios());
-            stmt.setString(6, reparacion.getEstado());
-            stmt.setBigDecimal(7, reparacion.getImporte());
-            
-            int filasAfectadas = stmt.executeUpdate();
-            
-            if(filasAfectadas > 0){
-                 ResultSet rs = stmt.getGeneratedKeys();
-                if (rs.next()) {
-                return rs.getLong(1);
-            }
-            }
-        }catch(SQLException e){
-            throw new RuntimeException(e);
-        }
-        return -1L;
-    }   
+        Reparacion r = new Reparacion();
+        
+        String sql = "";
+        
+        
+        return null;
+    }
+    
     
     // Modificar reparación existente
     public static boolean updateReparacion(Connection conn, Reparacion reparacion) {
@@ -269,6 +281,7 @@ public class ReparacionDao {
         }
     }
     
+    // Actualizar datos de una reparación
     public static boolean actualizarDatos(Reparacion reparacion) {
        
      Connection conn = ConexionBD.connect();

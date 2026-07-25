@@ -38,6 +38,7 @@ public class ClienteDao {
         return true;
     }
     
+    // Eliminar cliente
     public static boolean deleteCliente(Long idCliente){
         
         String sql = "DELETE FROM cliente WHERE id = ?";
@@ -83,18 +84,47 @@ public class ClienteDao {
     }
      
     // OBTENER CLIENTE MEDIANTE FILTROS 
-    public static List<Cliente> selectCliente(String nombre, String apellidos, String telefono){
+    public static List<Cliente> selectCliente(String nombre, String apellidos, String dni, String telefono){
         
-         String sql = "SELECT id, nombre, apellidos, dni, telefono, direccion FROM cliente WHERE nombre LIKE ? "
-                 + " AND dni LIKE ? AND apellidos LIKE ? AND telefono LIKE ?";
         List<Cliente> clientesList = new ArrayList<>();
-       
-        try(Connection conn = ConexionBD.connect(); PreparedStatement stmt = conn.prepareStatement(sql)){
-            stmt.setString(1, "%" + nombre + "%");
-            stmt.setString(2, "%" + apellidos + "%");
-            stmt.setString(3, "%" + telefono + "%");
+        
+        StringBuilder sql = new StringBuilder( "SELECT id, nombre, apellidos, dni, telefono, direccion "
+                + "FROM cliente WHERE 1=1");
+         System.out.println(sql);
+System.out.println("DNI: [" + dni + "]");
+        
+        if(!nombre.isBlank()){
+            sql.append(" AND nombre = ?");
+        }
+        if(!apellidos.isBlank()){
+            sql.append(" AND apellidos = ?");
+        }
+        if(!dni.isBlank()){
+            sql.append(" AND dni = ?");
+        }
+        if(!telefono.isBlank()){
+            sql.append(" AND telefono = ?");
+        }
+        
+        try(Connection conn = ConexionBD.connect(); PreparedStatement stmt = conn.prepareStatement(sql.toString())){
+            
+            int index = 1;
+            
+            if(!nombre.isBlank()){
+                stmt.setString(index++, nombre);
+            }
+            if(!apellidos.isBlank()){
+                stmt.setString(index++, apellidos);
+            }
+            if(!dni.isBlank()){
+                stmt.setString(index++, dni);
+            }
+            if(!telefono.isBlank()){
+                stmt.setString(index++, telefono);
+            }
             
             ResultSet rs = stmt.executeQuery();
+            
             while(rs.next()){
                 Cliente c = new Cliente(
                     rs.getLong("id"),
