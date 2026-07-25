@@ -22,6 +22,7 @@ import modelo.Modelo;
 import modelo.ModeloController;
 import lineaReparacion.LineaReparacion;
 import print.GeneradorFactura;
+import print.GeneradorRecibo;
 import tipoReparacion.TipoReparacion;
 import tipoReparacion.TipoReparacionController;
 import utils.Utils;
@@ -51,7 +52,7 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("REPARACION");
-        setSize(930, 800);
+        setSize(930, 600);
         this.cliente = cliente;
         this.reparacion = reparacion;
         cargarComboBoxMarca();
@@ -122,6 +123,7 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         guardarMenuItem = new javax.swing.JMenuItem();
+        recibiMenuItem = new javax.swing.JMenuItem();
         facturaMenuItem = new javax.swing.JMenuItem();
         salirMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -129,7 +131,7 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         eliminarMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setSize(new java.awt.Dimension(930, 800));
+        setSize(new java.awt.Dimension(930, 600));
 
         jLabel3.setText("Nombre:");
 
@@ -429,7 +431,7 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
                                         .addComponent(addLineaReparacionButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(delLineaReparacionButton)))))))
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 268, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -444,22 +446,23 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
                     .addComponent(insertReparacionButton)
                     .addComponent(modificarReparacionButton))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(modeloLabel)
-                    .addComponent(insertModeloButton)
-                    .addComponent(modificarModeloButton)
-                    .addComponent(modeloComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(precioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addLineaReparacionButton)
-                    .addComponent(delLineaReparacionButton))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(insertModeloButton)
+                        .addComponent(modificarModeloButton)
+                        .addComponent(modeloComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel10)
+                        .addComponent(precioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addLineaReparacionButton)
+                        .addComponent(delLineaReparacionButton)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(importeLabel)
                     .addComponent(importeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         comentariosLabel.setText("COMENTARIOS");
@@ -475,11 +478,11 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(281, 281, 281)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 912, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(comentariosLabel)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(402, 402, 402))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -505,6 +508,14 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
             }
         });
         jMenu1.add(guardarMenuItem);
+
+        recibiMenuItem.setText("Recibí");
+        recibiMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                recibiMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(recibiMenuItem);
 
         facturaMenuItem.setText("Crear Factura");
         facturaMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -555,20 +566,16 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator3))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -584,11 +591,11 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -823,6 +830,7 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         r.setImporte(Utils.stringToBigDecimal(importeTextField.getText())); // Importe total
         r.setGarantia(garantiaCheckBox.isSelected());   
         r.setDispositivo(d);
+        r.getDispositivo().setCodigoDesbloqueo(codigoDesbloqueoTextField.getText());
              
         return rc.addReparacion(r);
     }
@@ -838,7 +846,7 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         reparacion.setImporte(Utils.stringToBigDecimal(importeTextField.getText()));
         reparacion.setGarantia(garantiaCheckBox.isSelected());
         reparacion.setDispositivo(buildDispositivo(reparacion.getDispositivo()));
-        
+        reparacion.getDispositivo().setCodigoDesbloqueo(codigoDesbloqueoTextField.getText());
         return rc.modificarReparacion(reparacion);
     }
     
@@ -1100,7 +1108,7 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_guardarMenuItemActionPerformed
 
     private void facturaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facturaMenuItemActionPerformed
-         JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser = new JFileChooser();
         fileChooser.setSelectedFile(new File("Factura_" + reparacion.getId() + ".pdf"));
         fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
 
@@ -1154,6 +1162,31 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
         modificar = true;
         blockFields();
     }//GEN-LAST:event_modificarMenuItemActionPerformed
+
+    private void recibiMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recibiMenuItemActionPerformed
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setSelectedFile(new File("Recibí_" + reparacion.getId() + ".pdf"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
+        int seleccion = fileChooser.showSaveDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            String ruta = fileChooser.getSelectedFile().getAbsolutePath();
+            if (!ruta.toLowerCase().endsWith(".pdf")) {
+                ruta += ".pdf";
+            }
+            try {
+                GeneradorRecibo generador = new GeneradorRecibo();
+                generador.generarReciboPdf(reparacion, ruta);
+                JOptionPane.showMessageDialog(this, "Recibí generado correctamente.");
+                // Abrir el PDF automáticamente tras generarlo
+                Desktop.getDesktop().open(new File(ruta));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al generar el recibí: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_recibiMenuItemActionPerformed
 
     // Actualiza importeTextField
     private void actualizarImporte() {
@@ -1222,6 +1255,7 @@ public class DetalleReparacionDialog extends javax.swing.JDialog {
     private javax.swing.JButton modificarReparacionButton;
     private javax.swing.JTextField nombreTextField;
     private javax.swing.JTextField precioTextField;
+    private javax.swing.JMenuItem recibiMenuItem;
     private javax.swing.JLabel reparacionLabel;
     private javax.swing.JTable reparacionesJTable;
     private com.toedter.calendar.JDateChooser salidaDate;

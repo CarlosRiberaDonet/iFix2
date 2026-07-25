@@ -19,6 +19,7 @@ public class ReparacionTableMouseListener extends MouseAdapter{
     
     Frame parent;
     private JTable reparacionesTable;
+    private Reparacion reparacionSelect;
     private List<Reparacion> reparacionesList;
     
     public ReparacionTableMouseListener(Frame parent, JTable reparacionesTable, List<Reparacion> reparacionesList) {
@@ -27,23 +28,35 @@ public class ReparacionTableMouseListener extends MouseAdapter{
         this.reparacionesList = reparacionesList;
     }
     
+    public Reparacion getReparacionSeleccionada() {
+        return reparacionSelect;
+    }
+    
      public void setReparacionesList(List<Reparacion> reparacionesList) {
         this.reparacionesList = reparacionesList;
     }
     
     @Override
     public void mouseClicked(MouseEvent e) {
+
+        int filaVista = reparacionesTable.rowAtPoint(e.getPoint());
+
+        if (filaVista == -1) {
+            return;
+        }
+
+        int filaModelo = reparacionesTable.convertRowIndexToModel(filaVista);
+        reparacionSelect = reparacionesList.get(filaModelo);
+
         if (e.getClickCount() == 2) {
-            int filaVista = reparacionesTable.rowAtPoint(e.getPoint());
-            if (filaVista != -1) {
-                int filaModelo = reparacionesTable.convertRowIndexToModel(filaVista);
-                Reparacion reparacionSelect = reparacionesList.get(filaModelo);
-                Cliente cliente = reparacionSelect.getDispositivo().getCliente();
-                DetalleReparacionDialog dialog = new DetalleReparacionDialog(parent, true, cliente, reparacionSelect);
-                dialog.setSize(830, 650);
-                dialog.setLocationRelativeTo(null);
-                dialog.setVisible(true);
-            }
+            Cliente cliente = reparacionSelect.getDispositivo().getCliente();
+
+            DetalleReparacionDialog dialog =
+                    new DetalleReparacionDialog(parent, true, cliente, reparacionSelect);
+
+            dialog.setSize(830, 650);
+            dialog.setLocationRelativeTo(null);
+            dialog.setVisible(true);
         }
     }
 }

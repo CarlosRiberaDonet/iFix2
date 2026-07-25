@@ -13,7 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -45,6 +47,38 @@ public class ClienteFrame extends JFrame{
     private void initUI() {
         setLayout(new BorderLayout());
 
+        // Barra de menú
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu fileMenu = new JMenu("File");
+        JMenu editMenu = new JMenu("Edit");
+
+        JMenuItem crearClienteItem = new JMenuItem("Crear cliente");
+        JMenuItem modificarClienteItem = new JMenuItem("Modificar cliente");
+        JMenuItem eliminarClienteItem = new JMenuItem("Eliminar cliente");
+        JMenuItem salirItem = new JMenuItem("Salir");
+
+        // Acciones
+        crearClienteItem.addActionListener(e -> abrirCrearCliente());
+        modificarClienteItem.addActionListener(e -> modificarCliente());
+        eliminarClienteItem.setEnabled(false);// implementar eliminar cliente
+        salirItem.addActionListener(e -> dispose());
+
+        // Añadir opciones al menú
+        fileMenu.add(crearClienteItem);
+        fileMenu.addSeparator();
+        fileMenu.add(salirItem);
+        editMenu.add(modificarClienteItem);
+        editMenu.add(eliminarClienteItem);
+        
+
+        // Añadir menú a la barra
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+
+        // Establecer barra de menú del JFrame
+        setJMenuBar(menuBar);
+        
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -54,13 +88,7 @@ public class ClienteFrame extends JFrame{
         telefonoTextField = new JTextField(10);
 
         JButton buscarButton = new JButton("Buscar");
-        JButton crearClienteButton = new JButton("Crear");
-        JButton modificarClienteButton = new JButton("Modificar");
-        // JButton eliminarCliente = new JButton("Eliminar");
         buscarButton.addActionListener(e -> buscarCliente());
-        crearClienteButton.addActionListener(e -> abrirCrearCliente());
-        modificarClienteButton.addActionListener(e -> modificarCliente());
-        // eliminarCliente.addActionListener(e -> eliminarCliente());
 
         topPanel.add(new JLabel("Nombre:"));
         topPanel.add(nombreTextField);
@@ -75,16 +103,11 @@ public class ClienteFrame extends JFrame{
         topPanel.add(telefonoTextField);
         
         topPanel.add(buscarButton);
-        topPanel.add(crearClienteButton);
-        topPanel.add(modificarClienteButton);
-        // topPanel.add(eliminarCliente);
 
         add(topPanel, BorderLayout.NORTH);
         tablePanel = new ClientesTable();
         tablaClientes = tablePanel.getTablaClientes(); 
         add(tablePanel, BorderLayout.CENTER);
-        
-        // eliminarCliente.setEnabled(false); // Deshabilito eliminar cliente hasta nueva implementación (ON DELETE CASCADE)
     }
 
     private void buscarCliente(){    

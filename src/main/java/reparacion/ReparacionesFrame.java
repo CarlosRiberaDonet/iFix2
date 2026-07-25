@@ -6,11 +6,17 @@ package reparacion;
 
 import cliente.Cliente;
 import java.awt.BorderLayout;
-import java.math.BigDecimal;
+import java.awt.Desktop;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import lineaReparacion.LineaReparacion;
+import print.GeneradorFactura;
 
 /**
  *
@@ -85,9 +91,13 @@ public class ReparacionesFrame extends javax.swing.JFrame {
         tablePanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         importeTotalLabel = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        imprimirMenuItem = new javax.swing.JMenuItem();
+        imprimirListadoMenuItem = new javax.swing.JMenuItem();
+        salirMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(930, 600));
 
         jLabel1.setText("IMEI:");
 
@@ -126,6 +136,36 @@ public class ReparacionesFrame extends javax.swing.JFrame {
         jLabel7.setText("IMPORTE TOTAL:");
 
         importeTotalLabel.setText("importeTotalLabel");
+
+        jMenu1.setText("File");
+
+        imprimirMenuItem.setText("Imprimir seleccionada");
+        imprimirMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imprimirMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(imprimirMenuItem);
+
+        imprimirListadoMenuItem.setText("Imprimir listado");
+        imprimirListadoMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imprimirListadoMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(imprimirListadoMenuItem);
+
+        salirMenuItem.setText("Salir");
+        salirMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(salirMenuItem);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -244,6 +284,90 @@ public class ReparacionesFrame extends javax.swing.JFrame {
         listener.setReparacionesList(reparacionesList);
     }//GEN-LAST:event_buscarButtonActionPerformed
 
+    private void salirMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirMenuItemActionPerformed
+       dispose();
+    }//GEN-LAST:event_salirMenuItemActionPerformed
+
+    private void imprimirListadoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imprimirListadoMenuItemActionPerformed
+        
+        List<LineaReparacion> lineaReparacionList = new ArrayList<>();
+        
+        // Obtengo LineaReparacion realizadas
+        for(Reparacion r : reparacionesList){
+            lineaReparacionList.clear();
+            
+            // Obtener reparaciones realizadas al dispositivo
+            r.setLineaReparacion(rc.getLineaReparacionList(r.getId()));
+            
+            lineaReparacionList.addAll(r.getLineaReparacion());
+  
+        }
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setSelectedFile(new File("Facturas.pdf"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
+
+        int seleccion = fileChooser.showSaveDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            String ruta = fileChooser.getSelectedFile().getAbsolutePath();
+            if (!ruta.toLowerCase().endsWith(".pdf")) {
+                ruta += ".pdf";
+            }
+            try {
+                GeneradorFactura generador = new GeneradorFactura();
+                generador.generarFacturasPdf(reparacionesList, ruta);
+                JOptionPane.showMessageDialog(this, "Factura generada correctamente.");
+
+                // Abrir el PDF automáticamente tras generarlo
+                Desktop.getDesktop().open(new File(ruta));
+
+             } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al generar la factura: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_imprimirListadoMenuItemActionPerformed
+
+    private void imprimirMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imprimirMenuItemActionPerformed
+        
+        List<LineaReparacion> lineaReparacionList = new ArrayList<>();
+        
+        // Obtengo la reparacion seleccionada
+        Reparacion reparacion = listener.getReparacionSeleccionada();
+        
+        // Obtener reparaciones realizadas al dispositivo
+        reparacion.setLineaReparacion(rc.getLineaReparacionList(reparacion.getId()));
+
+        lineaReparacionList.addAll(reparacion.getLineaReparacion());
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setSelectedFile(new File("Factura_" + reparacion.getId() + ".pdf"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
+
+        int seleccion = fileChooser.showSaveDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            String ruta = fileChooser.getSelectedFile().getAbsolutePath();
+            if (!ruta.toLowerCase().endsWith(".pdf")) {
+                ruta += ".pdf";
+            }
+
+            try {
+                GeneradorFactura generador = new GeneradorFactura();
+                generador.generarFacturaPdf(reparacion, ruta);
+                JOptionPane.showMessageDialog(this, "Factura generada correctamente.");
+
+                // Abrir el PDF automáticamente tras generarlo
+                Desktop.getDesktop().open(new File(ruta));
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al generar la factura: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_imprimirMenuItemActionPerformed
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscarButton;
@@ -252,6 +376,8 @@ public class ReparacionesFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> estadoComboBox;
     private javax.swing.JTextField imeiTextField;
     private javax.swing.JLabel importeTotalLabel;
+    private javax.swing.JMenuItem imprimirListadoMenuItem;
+    private javax.swing.JMenuItem imprimirMenuItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -259,8 +385,11 @@ public class ReparacionesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JSeparator jSeparator1;
     private com.toedter.calendar.JDateChooser salidaDateChooser;
+    private javax.swing.JMenuItem salirMenuItem;
     private javax.swing.JPanel tablePanel;
     private javax.swing.JTextField telefonoTextField;
     // End of variables declaration//GEN-END:variables

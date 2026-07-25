@@ -9,11 +9,13 @@ cliente\ClientesTable$1.class
 reparacion\ReparacionController.class
 main\MainFrame$3.class
 reparacion\DetalleReparacionDialog$11.class
+reparacion\ReparacionesFrame$2.class
 marca\Marca.class
 com\mycompany\ifix2\DatosTaller.class
 reparacion\DetalleReparacionDialog$14.class
 lineaReparacion\LineaReparacion.class
 reparacion\ReparacionesClienteFrame$3.class
+reparacion\DetalleReparacionDialog$19.class
 cliente\Cliente.class
 reparacion\DetalleReparacionDialog$2.class
 reparacion\ReparacionDao.class
@@ -39,8 +41,8 @@ reparacion\DetalleReparacionDialog.class
 modelo\ModeloDao.class
 cliente\ClienteController.class
 main\MainFrame$4.class
-print\Recibi.class
 reparacion\ReparacionesClienteFrame.class
+reparacion\ReparacionesFrame$4.class
 reparacion\DetalleReparacionDialog$17.class
 cliente\ClientesTable.class
 reparacion\DetalleReparacionDialog$3.class
@@ -61,6 +63,8 @@ marca\MarcaDao.class
 reparacion\DetalleReparacionDialog$4.class
 reparacion\ReparacionesFrame.class
 tipoReparacion\TipoReparacion.class
+reparacion\ReparacionesFrame$3.class
+print\GeneradorRecibo.class
 reparacion\DetalleReparacionDialog$15.class
 reparacion\DetalleReparacionDialog$18.class
 reparacion\ReparacionesClienteFrame$4.class

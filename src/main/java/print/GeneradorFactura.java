@@ -7,6 +7,7 @@ package print;
 import cliente.Cliente;
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Font;
@@ -24,6 +25,7 @@ import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.List;
 import lineaReparacion.LineaReparacion;
 import reparacion.Reparacion;
 
@@ -35,11 +37,40 @@ import reparacion.Reparacion;
 public class GeneradorFactura {
 
     private static final BigDecimal IVA_PORCENTAJE = new BigDecimal("0.21");
-
+    
     public void generarFacturaPdf(Reparacion reparacion, String rutaSalida) throws Exception {
+
         Document document = new Document(PageSize.A4, 40, 40, 60, 60);
         PdfWriter.getInstance(document, new FileOutputStream(rutaSalida));
+
         document.open();
+
+        dibujarFactura(document, reparacion);
+
+        document.close();
+    }
+    
+    public void generarFacturasPdf(List<Reparacion> reparaciones, String rutaSalida) throws Exception {
+
+        Document document = new Document(PageSize.A4, 40, 40, 60, 60);
+        PdfWriter.getInstance(document, new FileOutputStream(rutaSalida));
+
+        document.open();
+
+        for (int i = 0; i < reparaciones.size(); i++) {
+
+            dibujarFactura(document, reparaciones.get(i));
+
+            // Nueva página salvo en la última factura
+            if (i < reparaciones.size() - 1) {
+                document.newPage();
+            }
+        }
+
+        document.close();
+    }
+
+    private void dibujarFactura(Document document, Reparacion reparacion) throws DocumentException {
 
         Font fontTitulo = new Font(Font.HELVETICA, 18, Font.BOLD, new Color(30, 30, 30));
         Font fontEtiqueta = new Font(Font.HELVETICA, 10, Font.BOLD);
@@ -140,8 +171,10 @@ public class GeneradorFactura {
         pie.setAlignment(Element.ALIGN_CENTER);
         pie.setSpacingBefore(10f);
         document.add(pie);
-
-        document.close();
+    }
+    
+    public void generarListadoFacturasPdf(List<Reparacion> facturas, String ruta){
+        
     }
 
     private Paragraph tituloBloque(String texto, Font font) {
