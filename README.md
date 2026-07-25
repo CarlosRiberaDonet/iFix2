@@ -1,4 +1,4 @@
-# iFix2
+# iFix Repair Manager
 
 <p>
   <img src="https://img.shields.io/badge/Java-17-orange?logo=openjdk&logoColor=white" alt="Java 17"/>
