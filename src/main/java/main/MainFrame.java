@@ -5,6 +5,12 @@
 package main;
 
 import cliente.ClienteFrame;
+import java.awt.BorderLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import reparacion.ReparacionesFrame;
 
 /**
@@ -20,6 +26,8 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
+        this.setLayout(new BorderLayout());
+        this.add(crearPanelPortada(), BorderLayout.CENTER);
     }
 
     /**
@@ -31,79 +39,153 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        clientesButton = new javax.swing.JButton();
-        reparacionesButton = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        exitButton = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        salirMenuItem = new javax.swing.JMenuItem();
+        clientesMenu = new javax.swing.JMenu();
+        altaClienteMenuItem = new javax.swing.JMenuItem();
+        buscarClienteMenuItem = new javax.swing.JMenuItem();
+        reparacionesMenu = new javax.swing.JMenu();
+        nuevaFacturaMenuItem = new javax.swing.JMenuItem();
+        nuevaReparacionMenuItem = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        acercaMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        clientesButton.setText("CLIENTES");
-        clientesButton.addActionListener(new java.awt.event.ActionListener() {
+        jMenu1.setText("File");
+
+        salirMenuItem.setText("Salir");
+        salirMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clientesButtonActionPerformed(evt);
+                salirMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(salirMenuItem);
+
+        jMenuBar1.add(jMenu1);
+
+        clientesMenu.setText("Clientes");
+        clientesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientesMenuActionPerformed(evt);
             }
         });
 
-        reparacionesButton.setText("REPARACIONES");
-        reparacionesButton.addActionListener(new java.awt.event.ActionListener() {
+        altaClienteMenuItem.setText("Nuevo");
+        altaClienteMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reparacionesButtonActionPerformed(evt);
+                altaClienteMenuItemActionPerformed(evt);
+            }
+        });
+        clientesMenu.add(altaClienteMenuItem);
+
+        buscarClienteMenuItem.setText("Buscar");
+        buscarClienteMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarClienteMenuItemActionPerformed(evt);
+            }
+        });
+        clientesMenu.add(buscarClienteMenuItem);
+
+        jMenuBar1.add(clientesMenu);
+
+        reparacionesMenu.setText("Reparaciones");
+        reparacionesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reparacionesMenuActionPerformed(evt);
             }
         });
 
-        jButton3.setText("FACTURAS");
-
-        exitButton.setText("SALIR");
-        exitButton.addActionListener(new java.awt.event.ActionListener() {
+        nuevaFacturaMenuItem.setText("Nueva");
+        nuevaFacturaMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitButtonActionPerformed(evt);
+                nuevaFacturaMenuItemActionPerformed(evt);
             }
         });
+        reparacionesMenu.add(nuevaFacturaMenuItem);
+
+        nuevaReparacionMenuItem.setText("Listar");
+        nuevaReparacionMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevaReparacionMenuItemActionPerformed(evt);
+            }
+        });
+        reparacionesMenu.add(nuevaReparacionMenuItem);
+
+        jMenuBar1.add(reparacionesMenu);
+
+        jMenu2.setText("Facturas");
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Ayuda");
+
+        acercaMenuItem.setText("Acerca de");
+        acercaMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acercaMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu3.add(acercaMenuItem);
+
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(153, 153, 153)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(reparacionesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(clientesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(141, Short.MAX_VALUE))
+            .addGap(0, 408, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(clientesButton)
-                .addGap(18, 18, 18)
-                .addComponent(reparacionesButton)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addGap(18, 18, 18)
-                .addComponent(exitButton)
-                .addContainerGap(108, Short.MAX_VALUE))
+            .addGap(0, 273, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void clientesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesButtonActionPerformed
+    private void salirMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirMenuItemActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_salirMenuItemActionPerformed
+
+    private void clientesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesMenuActionPerformed
+       
+    }//GEN-LAST:event_clientesMenuActionPerformed
+
+    private void reparacionesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reparacionesMenuActionPerformed
+       
+    }//GEN-LAST:event_reparacionesMenuActionPerformed
+
+    private void altaClienteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altaClienteMenuItemActionPerformed
+        ClienteFrame clienteFrame = new ClienteFrame();
+        clienteFrame.abrirCrearCliente();
+    }//GEN-LAST:event_altaClienteMenuItemActionPerformed
+
+    private void buscarClienteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarClienteMenuItemActionPerformed
         ClienteFrame clienteFrame = new ClienteFrame();
         clienteFrame.setVisible(true);
-    }//GEN-LAST:event_clientesButtonActionPerformed
+    }//GEN-LAST:event_buscarClienteMenuItemActionPerformed
 
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitButtonActionPerformed
+    private void nuevaReparacionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaReparacionMenuItemActionPerformed
+        ReparacionesFrame reparacionesFrame = new ReparacionesFrame();
+        reparacionesFrame.setVisible(true);
+    }//GEN-LAST:event_nuevaReparacionMenuItemActionPerformed
 
-    private void reparacionesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reparacionesButtonActionPerformed
-       ReparacionesFrame reparacionesFrame = new ReparacionesFrame();
-       reparacionesFrame.setVisible(true);
-    }//GEN-LAST:event_reparacionesButtonActionPerformed
+    private void nuevaFacturaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaFacturaMenuItemActionPerformed
+        ClienteFrame clienteFrame = new ClienteFrame();
+        clienteFrame.setVisible(true);
+    }//GEN-LAST:event_nuevaFacturaMenuItemActionPerformed
+
+    private void acercaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acercaMenuItemActionPerformed
+
+        JOptionPane.showMessageDialog(this,
+            "iFix2 - Gestión de taller de reparaciones\nVersión 1.0\nDesarrollado por Carlos Ribera Donet\n2026",
+            "Acerca de iFix2",
+            JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_acercaMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,11 +221,30 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
+    
+    private JPanel crearPanelPortada() {
+        JPanel panel = new JPanel(new BorderLayout());
+
+        ImageIcon icono = new ImageIcon(getClass().getResource("/ifix.png"));
+        JLabel labelImagen = new JLabel(icono);
+        labelImagen.setHorizontalAlignment(SwingConstants.CENTER);
+
+        panel.add(labelImagen, BorderLayout.CENTER);
+        return panel;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton clientesButton;
-    private javax.swing.JButton exitButton;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton reparacionesButton;
+    private javax.swing.JMenuItem acercaMenuItem;
+    private javax.swing.JMenuItem altaClienteMenuItem;
+    private javax.swing.JMenuItem buscarClienteMenuItem;
+    private javax.swing.JMenu clientesMenu;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem nuevaFacturaMenuItem;
+    private javax.swing.JMenuItem nuevaReparacionMenuItem;
+    private javax.swing.JMenu reparacionesMenu;
+    private javax.swing.JMenuItem salirMenuItem;
     // End of variables declaration//GEN-END:variables
 }

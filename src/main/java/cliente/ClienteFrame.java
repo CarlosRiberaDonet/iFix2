@@ -129,7 +129,7 @@ public class ClienteFrame extends JFrame{
         tablePanel.cargarClientes(clientesList);
     }
 
-    private void abrirCrearCliente() {
+    public void abrirCrearCliente() {
         JDialog dialog = new JDialog(this, "CREAR CLIENTE", true);
         dialog.setSize(400, 300);
         dialog.setLocationRelativeTo(this);
