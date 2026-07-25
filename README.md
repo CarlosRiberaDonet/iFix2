@@ -16,6 +16,7 @@ Aplicación de escritorio en Java para la gestión integral de un taller de repa
 - [Motivación](#motivación)
 - [Funcionalidades](#funcionalidades)
 - [Arquitectura y modelo de datos](#arquitectura-y-modelo-de-datos)
+- [Diagrama de clases](#diagrama-de-clases)
 - [Decisiones técnicas destacadas](#decisiones-técnicas-destacadas)
 - [Stack técnico](#stack-técnico)
 - [Estructura del proyecto](#estructura-del-proyecto)
@@ -65,6 +66,76 @@ Cliente 1---N Dispositivo 1---N Reparacion 1---N LineaReparacion N---1 TipoRepar
 
 El esquema fue diseñado y refactorizado específicamente para resolver este modelo N:M de forma limpia, evitando duplicidad de datos entre reparaciones con conceptos similares.
 
+### Diagrama entidad-relación
+<img width="1245" height="817" alt="diagrama-er" src="https://github.com/user-attachments/assets/d5a8857f-2bba-498f-9c4c-ff0eef721c57" />
+(generado por ingeniería inversa desde MySQL Workbench).
+
+### Diagrama de clases
+
+```mermaid
+classDiagram
+    class Cliente {
+        -Long id
+        -String nombre
+        -String apellidos
+        -String nif
+        -String telefono
+        -String direccion
+    }
+
+    class Dispositivo {
+        -Long id
+        -String imei
+        -String codigoDesbloqueo
+        -Modelo modelo
+        -Cliente cliente
+    }
+
+    class Modelo {
+        -Long id
+        -String nombre
+        -Marca marca
+    }
+
+    class Marca {
+        -Long id
+        -String nombre
+    }
+
+    class Reparacion {
+        -Long id
+        -LocalDate fechaEntrada
+        -LocalDate fechaSalida
+        -boolean garantia
+        -String comentarios
+        -String estado
+        -BigDecimal importe
+        -Dispositivo dispositivo
+        -List~LineaReparacion~ lineaReparacion
+    }
+
+    class LineaReparacion {
+        -Long id
+        -Long idReparacion
+        -TipoReparacion tipoReparacion
+        -BigDecimal precio
+    }
+
+    class TipoReparacion {
+        -Long id
+        -String nombre
+    }
+
+    Cliente "1" --> "0..*" Dispositivo : posee
+    Dispositivo "1" --> "0..*" Reparacion : tiene
+    Dispositivo "0..*" --> "1" Modelo : es de
+    Modelo "0..*" --> "1" Marca : pertenece a
+    Reparacion "1" --> "0..*" LineaReparacion : incluye
+    LineaReparacion "0..*" --> "1" TipoReparacion : de tipo
+```
+
+*(solo se incluyen las clases de dominio; se omiten las clases de vista, DAO y generadores de PDF para mantener el diagrama legible)*
+
 ## Decisiones técnicas destacadas
 
 Algunas decisiones de diseño tomadas durante el desarrollo, documentadas aquí porque reflejan el criterio aplicado, no solo el resultado final:
@@ -107,7 +178,7 @@ src/main/resources/
    ```bash
    git clone https://github.com/CarlosRiberaDonet/iFix2.git
    ```
-2. Crear la base de datos MySQL y ejecutar el script de esquema (`/sql/schema.sql`.
+2. Crear la base de datos MySQL y ejecutar el script de esquema (`/sql/schema.sql` — *añadir si no existe aún*).
 3. Configurar las credenciales de conexión en `[ruta del archivo de configuración]`.
 4. Compilar y ejecutar con Maven:
    ```bash
@@ -127,4 +198,4 @@ src/main/resources/
 ## Autor
 
 **Carlos Ribera Donet**
-Software Developer — [LinkedIn](https://www.linkedin.com/in/carlos-r-335390276/) · [GitHub](https://github.com/CarlosRiberaDonet)
+Desarrollador Java backend/full-stack — [LinkedIn](#) · [GitHub](https://github.com/CarlosRiberaDonet)
