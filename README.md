@@ -178,8 +178,8 @@ src/main/resources/
    ```bash
    git clone https://github.com/CarlosRiberaDonet/iFix2.git
    ```
-2. Crear la base de datos MySQL y ejecutar el script de esquema (`/sql/schema.sql` — *añadir si no existe aún*).
-3. Configurar las credenciales de conexión en `[ruta del archivo de configuración]`.
+2. Crear la base de datos MySQL y ejecutar el script de esquema (`/sql/schema.sql`.
+3. Configurar las credenciales de conexión en `/src/com/mycompany/ifix2/ConexionBD`.
 4. Compilar y ejecutar con Maven:
    ```bash
    mvn clean install
