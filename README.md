@@ -198,4 +198,4 @@ src/main/resources/
 ## Autor
 
 **Carlos Ribera Donet**
-Desarrollador Java backend/full-stack — [LinkedIn](#) · [GitHub](https://github.com/CarlosRiberaDonet)
+Software Developer — [LinkedIn](https://www.linkedin.com/in/carlos-r-335390276/) · [GitHub](https://github.com/CarlosRiberaDonet)
